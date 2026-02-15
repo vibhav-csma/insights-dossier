@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Insights Dossier | Coca-Cola × consuma</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@400;600;700;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Design tokens */
+    :root{
+      --coke-red:#E51B17;
+      --consuma-purple:#5B2C6F;
+      --paper:#FBF5EE;
+      --bg:#f4efe6;
+      --card:#FFFDF7;
+      --ink:#0f1720;
+      --muted:#6b7280;
+      --accent:var(--consuma-purple);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    
+
+    header{
+      background:var(--card);
+      border-bottom:1px solid #e6e9ee;
+      padding:18px 24px;
+      display:grid;
+      grid-template-columns: 220px 1fr 220px;
+      align-items:center;
+      gap:12px;
+    }
+    .brand{display:flex;gap:12px;align-items:center;justify-self:start}
+    .brand img{height:30px;object-fit:contain}
+    .logo-coke{height:34px}
+    .logo-consuma{height:34px}
+    .logo-divider{font-family:'Playfair Display',serif;color:var(--muted);margin:0 8px;font-weight:700;font-size:20px}
+    .title{font-weight:900;font-size:28px;justify-self:center;letter-spacing:-0.02em}
+    .subtitle{color:var(--muted);font-size:13px;margin:2px 0 0;justify-self:center}
+
+    /* Overview banner (summary of datapoints) */
+    .overview {
+      max-width: 1100px;
+      margin: 18px auto;
+      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.99));
+      border: 1px solid rgba(16,24,40,0.06);
+      padding: 22px 28px;
+      border-radius: 8px;
+      display: flex;
+      gap: 28px;
+      align-items: center;
+      box-shadow: 0 18px 40px rgba(16,24,40,0.06);
+      min-height: 110px;
+    }
+    .overview::before{
+      content:'';
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+    }
+    .overview .brand-inline{display:flex;gap:12px;align-items:center;margin-bottom:8px}
+    .overview .brand-inline img{height:28px}
+    .overview .brand-inline .divider-vert { width:1px; height:28px; background:rgba(16,24,40,0.12); margin:0 8px; border-radius:1px; }
+    .overview .left {
+      flex:1;
+    }
+    .overview .left h3 { margin:0; font-family:'Playfair Display',serif; font-size:20px; font-weight:800; }
+    .overview .left p { margin:6px 0 0; color:var(--muted); font-size:13px; font-family: 'Roboto Mono', monospace; }
+    .overview .metrics { display:flex; gap:22px; align-items:center; }
+    .overview .metric { text-align:center; min-width:120px; }
+    .overview .metric .value { font-size:22px; font-weight:800; font-family:'Playfair Display', serif; color:var(--ink); }
+    .overview .metric .label { font-size:12px; color:var(--muted); font-family: 'Roboto Mono', monospace; margin-top:4px; }
+    .overview .meta { margin-left:auto; text-align:right; color:var(--muted); font-family: 'Roboto Mono', monospace; font-size:12px; }
+
+    /* Layout */
+    .dossier{
+      max-width:1100px;
+      margin:20px auto;
+      display:flex;
+      flex-direction:column;
+      min-height:calc(100vh - 120px);
+      background:transparent;
+    }
+    @media(min-width:780px){.dossier{flex-direction:row;gap:20px;align-items:flex-start}}
+
+    .content{
+      flex:1;
+      background:var(--paper);
+      border:1px solid rgba(16,24,40,0.04);
+      padding:24px;
+      min-width:0;
+      border-radius:10px;
+      box-shadow: 0 12px 34px rgba(16,24,40,0.03);
+    }
+    .sidebar{
+      display:flex;
+      gap:10px;
+      padding:12px;
+      overflow:auto;
+      align-items:center;
+      background:transparent;
+      order:-1; /* on mobile show above content */
+    }
+    @media(min-width:780px){
+      .sidebar{flex-direction:column;width:220px;order:2;padding:18px;border-left:1px solid #e6e9ee}
+      .content{order:1}
+    }
+
+    /* Post-it / tab card */
+    .postit{
+      --accent:var(--accent);
+      width:180px;
+      height:56px;
+      padding:10px 14px;
+      background:linear-gradient(180deg,var(--card),#fff);
+      border-left:6px solid var(--accent);
+      border-radius:6px;
+      box-shadow:0 8px 20px rgba(15,23,42,0.06);
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
+      transition:transform .18s ease,box-shadow .18s ease,border-left-width .18s ease;
+      font-family:'Playfair Display', serif;
+      font-size:15px;
+    }
+    .postit:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(15,23,42,0.08)}
+    .postit.active{border-left-width:10px;box-shadow:0 20px 50px rgba(15,23,42,0.12)}
+    .postit .title{font-size:15px;font-weight:700;text-align:center}
+    .postit.small{width:140px;height:44px;padding:8px 10px}
+    @media(max-width:779px){.postit{width:120px;height:48px;padding:8px 10px;border-radius:6px}}
+
+    /* Muted coming soon */
+    .postit.coming-soon{opacity:.65;filter:grayscale(.15);border-left-color:#cbd5e1;cursor:pointer}
+    .badge{position:absolute;font-size:11px;color:var(--muted);right:8px;top:6px;font-weight:600}
+
+    /* Sections */
+    .sphere-section{display:none;position:relative;padding-bottom:18px}
+    .sphere-section.active{display:block}
+    .panel-title{font-family:'Playfair Display', serif;font-size:20px;font-weight:800;margin:0 0 6px}
+    .title, .panel-title { font-family: 'Playfair Display', serif; }
+    .panel-sub{font-family:'Roboto Mono', monospace;color:var(--muted);margin:0 0 18px}
+    .card{background:var(--card);border:1px solid #eef2f6;padding:14px;border-radius:8px;margin-bottom:12px}
+
+    /* Lists */
+    .insight-list{display:flex;flex-direction:column;gap:10px}
+    .insight-item{display:flex;gap:12px;align-items:flex-start;background:#fbfdff;padding:12px;border-radius:8px;border:1px solid #f0f4f8}
+    .insight-num{width:28px;height:28px;background:var(--accent);color:white;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700}
+
+    /* charts small */
+    .charts{display:grid;grid-template-columns:1fr;gap:12px}
+    @media(min-width:640px){.charts{grid-template-columns:1fr 1fr}}
+    .bar-track{height:18px;background:#eef2f6;border-radius:6px;overflow:hidden}
+    .bar-fill{height:100%;background:var(--accent);border-radius:6px}
+
+    /* Preview / coming overlays */
+    .content-inner.preview-mode{filter:blur(3px);pointer-events:none;opacity:.95}
+    .overlay-back{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:6}
+    .overlay-card{background:var(--card);padding:18px 22px;border-radius:10px;box-shadow:0 18px 48px rgba(15,23,42,0.12);text-align:center;min-width:220px}
+    .overlay-card .big{font-size:20px;font-weight:800}
+    .overlay-card .muted{color:var(--muted);margin-top:8px}
+    footer{color:var(--muted);font-size:13px;margin-top:18px}
+
+    /* Mobile bottom tab bar */
+    @media(max-width:899px){
+      .sidebar{
+        position:fixed;
+        left:12px;
+        right:12px;
+        bottom:12px;
+        display:flex;
+        gap:10px;
+        padding:8px;
+        background:transparent;
+        border-radius:10px;
+        z-index:80;
+        justify-content:space-between;
+        box-shadow:0 12px 30px rgba(15,23,42,0.06);
+      }
+    }
+  </style>
+</head>
+<body>
+  
+
+  
+  <div class="overview">
+    <div class="left">
+      <div class="brand-inline">
+        <img src="./assets/consuma.png" alt="consuma" />
+        <div class="divider-vert" aria-hidden="true"></div>
+        <img src="./assets/coca.png" alt="Coca-Cola" />
+      </div>
+      <h3>Insights Dossier</h3>
+      <p>Strategic insights across consumer behavior, brand performance, cultural trends, and market dynamics. Updated February 2026.</p>
+    </div>
+    <div class="metrics">
+      <div class="metric"><div class="value">31</div><div class="label">Total insights</div></div>
+      <div class="metric"><div class="value">14.2M</div><div class="label">Data points analyzed</div></div>
+      <div class="metric"><div class="value">7</div><div class="label">Areas of interest</div></div>
+    </div>
+  </div>
+
+  <div class="dossier">
+    <aside class="sidebar" aria-hidden="false">
+      <div class="postit active" data-sphere="consumer" style="--accent:var(--consuma-purple)">
+        <div class="title">👤 The Consumer</div>
+      </div>
+      <div class="postit" data-sphere="brands" style="--accent:var(--coke-red)">
+        <div class="title">🏷️ Brands</div>
+      </div>
+      <div class="postit" data-sphere="marketing" style="--accent:var(--consuma-purple)">
+        <div class="title">💡 Marketing Inspiration</div>
+      </div>
+      <div class="postit" data-sphere="fnb" style="--accent:#1f2937">
+        <div class="title">🍽️ F&B</div>
+      </div>
+      <div class="postit coming-soon" data-sphere="events" style="--accent:#9CA3AF">
+        <div class="title">🎉 Events</div>
+      </div>
+      <div class="postit coming-soon" data-sphere="media" style="--accent:#9CA3AF">
+        <div class="title">📺 Media</div>
+      </div>
+      <div class="postit coming-soon" data-sphere="social-trends" style="--accent:#9CA3AF">
+        <div class="title">📱 Social Trends</div>
+      </div>
+    </aside>
+
+    <main class="content" id="main">
+      <!-- Consumer (unlocked) -->
+      <section id="consumer" class="sphere-section active">
+        <div class="content-inner">
+          <h2 class="panel-title">The Consumer</h2>
+          <p class="panel-sub">Sentiment, Recent Events, Preferences</p>
+
+          <!-- Insight 01 -->
+          <div class="card">
+            <div style="display:flex;gap:12px;align-items:center">
+              <div style="width:54px;height:54px;background:#fff;border-radius:8px;border:1px solid #f0f2f5;display:flex;align-items:center;justify-content:center;font-size:22px">👶</div>
+              <div style="flex:1">
+                <div style="font-weight:800;font-size:18px">The Consultant Child (Gen Alpha Authority)</div>
+                <div style="color:var(--muted);margin-top:6px">Gen Alpha influences household purchasing decisions across categories.</div>
+              </div>
+              <div style="text-align:right;color:var(--coke-red);font-weight:800;font-size:20px">26%</div>
+            </div>
+            <div style="margin-top:12px">Gen Alpha now acts as an internal consultant; 55% of parents admit to buying items their child recommended.</div>
+            <div style="margin-top:12px">
+              <!-- area chart (SVG) -->
+              <svg viewBox="0 0 600 140" width="100%" height="140" preserveAspectRatio="none" style="margin-top:12px">
+                <defs>
+                  <linearGradient id="g1" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="rgba(229,27,23,0.12)"/>
+                    <stop offset="100%" stop-color="rgba(229,27,23,0)"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,100 C100,70 200,60 300,50 C400,40 500,60 600,55 L600,140 L0,140 Z" fill="url(#g1)" stroke="none"/>
+                <path d="M0,100 C100,70 200,60 300,50 C400,40 500,60 600,55" fill="none" stroke="#E51B17" stroke-width="2.5" stroke-linecap="round"/>
+                <text x="60" y="130" fill="#6b7280" font-family:'Roboto Mono' font-size="12">Discovery</text>
+                <text x="260" y="130" fill="#6b7280" font-family:'Roboto Mono' font-size="12">Short Video</text>
+                <text x="460" y="130" fill="#6b7280" font-family:'Roboto Mono' font-size="12">Purchase Influence</text>
+              </svg>
+            </div>
+            <div style="margin-top:12px;padding:12px;border-left:4px solid var(--consuma-purple);background:#fff;border-radius:6px">
+              <strong>Strategic action:</strong> Market through expert-led educational content to turn kids into brand advocates.
+            </div>
+            <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Gen Alpha</span>
+              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Household</span>
+              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Influence</span>
+            </div>
+          </div>
+
+          <!-- Insight 02 -->
+          <div class="card">
+            <div style="display:flex;gap:12px;align-items:center">
+              <div style="width:54px;height:54px;background:#fff;border-radius:8px;border:1px solid #f0f2f5;display:flex;align-items:center;justify-content:center;font-size:22px">💸</div>
+              <div style="flex:1">
+                <div style="font-weight:800;font-size:18px">Financial Nihilism (The Death of Frugality)</div>
+                <div style="color:var(--muted);margin-top:6px">Gen Z prioritizes experiences over saving; discretionary spend rises.</div>
+              </div>
+              <div style="text-align:right;color:var(--consuma-purple);font-weight:800;font-size:20px">~50%</div>
+            </div>
+            <div style="margin-top:12px">Gen Z spends ~50% of income on experiences (dining, travel); position Coke as the accessory for those moments.</div>
+            <div style="margin-top:12px">
+              <svg viewBox="0 0 600 140" width="100%" height="140" preserveAspectRatio="none" style="margin-top:12px">
+                <defs>
+                  <linearGradient id="g2" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="rgba(91,44,111,0.12)"/>
+                    <stop offset="100%" stop-color="rgba(91,44,111,0)"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,110 C100,90 200,80 300,95 C400,110 500,100 600,98 L600,140 L0,140 Z" fill="url(#g2)"/>
+                <path d="M0,110 C100,90 200,80 300,95 C400,110 500,100 600,98" fill="none" stroke="var(--consuma-purple)" stroke-width="2.5" stroke-linecap="round"/>
+                <text x="70" y="128" fill="#6b7280" font-family:'Roboto Mono' font-size="12">Eating Out</text>
+                <text x="320" y="128" fill="#6b7280" font-family:'Roboto Mono' font-size="12">Sneakers</text>
+                <text x="520" y="128" fill="#6b7280" font-family:'Roboto Mono' font-size="12">Travel</text>
+              </svg>
+            </div>
+            <div style="margin-top:12px;padding:12px;border-left:4px solid var(--coke-red);background:#fff;border-radius:6px">
+              <strong>Strategic action:</strong> Position Coke as the essential accessory to the experience economy.
+            </div>
+            <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Gen Z</span>
+              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Spending</span>
+              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Experience</span>
+            </div>
+          </div>
+
+          <!-- Insight 03 -->
+          <div class="card">
+            <div style="display:flex;gap:12px;align-items:center">
+              <div style="width:54px;height:54px;background:#fff;border-radius:8px;border:1px solid #f0f2f5;display:flex;align-items:center;justify-content:center;font-size:22px">🧠</div>
+              <div style="flex:1">
+                <div style="font-weight:800;font-size:18px">The Shared 'Brainrot' Language Barrier</div>
+                <div style="color:var(--muted);margin-top:6px">Niche slang and formats create in-group cultural codes.</div>
+              </div>
+              <div style="text-align:right;color:#0ea5a4;font-weight:800">High</div>
+            </div>
+            <div style="margin-top:12px">'Brainrot' formats spread rapidly and are intentionally obscure; brands must be agile and avoid forced mimicry.</div>
+            <div style="margin-top:12px;padding:12px;border-left:4px solid var(--consuma-purple);background:#fff;border-radius:6px">
+              <strong>Strategic action:</strong> Use visual absurdist humor rather than attempting to replicate in-group slang.
+            </div>
+            <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Brainrot</span>
+              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Slang</span>
+              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Cultural Code</span>
+            </div>
+          </div>
+
+          <!-- Insight 04 -->
+          <div class="card">
+            <div style="display:flex;gap:12px;align-items:center">
+              <div style="width:54px;height:54px;background:#fff;border-radius:8px;border:1px solid #f0f2f5;display:flex;align-items:center;justify-content:center;font-size:22px">⏱️</div>
+              <div style="flex:1">
+                <div style="font-weight:800;font-size:18px">'Reels for Notes' (The Death of Deep Focus)</div>
+                <div style="color:var(--muted);margin-top:6px">Short-form video transforms attention and learning behaviors.</div>
+              </div>
+              <div style="text-align:right;color:#ef4444;font-weight:800">9-12h</div>
+            </div>
+            <div style="margin-top:12px">Younger Gen Z screen time is 9–12 hours daily; micro-content dominates attention.</div>
+            <div style="margin-top:12px;padding:12px;border-left:4px solid var(--coke-red);background:#fff;border-radius:6px">
+              <strong>Strategic action:</strong> Micro-dose messaging — keep brand messages under 7 seconds to land.
+            </div>
+            <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Attention</span>
+              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Reels</span>
+              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Micro-content</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Brands (may be locked/preview depending on schedule) -->
+      <section id="brands" class="sphere-section">
+        <div class="content-inner">
+          <h2 class="panel-title">Brands</h2>
+          <p class="panel-sub">Coke Brands vs X, Comparisons</p>
+          <div class="card">
+            <h4 style="margin:0 0 8px">Share of voice</h4>
+            <div class="bar-track"><div class="bar-fill" style="width:58%"></div></div>
+            <div style="display:flex;gap:6px;margin-top:8px"><div style="flex:1;color:var(--muted)">Coke 58%</div><div style="flex:1;color:var(--muted)">Pepsi 32%</div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Marketing -->
+      <section id="marketing" class="sphere-section">
+        <div class="content-inner">
+          <h2 class="panel-title">Marketing Inspiration</h2>
+          <p class="panel-sub">Activations, Ads, Campaigns</p>
+          <div class="card">
+            <div class="insight-item"><div class="insight-num">1</div><div>Short-form UGC outperforms brand-led by 3.2x</div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- F&B -->
+      <section id="fnb" class="sphere-section">
+        <div class="content-inner">
+          <h2 class="panel-title">F&B</h2>
+          <p class="panel-sub">Food, Beverages, Cuisine</p>
+          <div class="card">
+            <div class="insight-item"><div class="insight-num">1</div><div>Pizza, burgers, snacks top pairings</div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Coming-soon sections: content will be replaced by JS to show title/sub only -->
+      <section id="events" class="sphere-section">
+        <div class="content-inner">
+          <h2 class="panel-title">Events</h2>
+          <p class="panel-sub">Social, Entertainment, Celebs</p>
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <div style="font-weight:800;font-size:18px">Event spikes & activations</div>
+                <div style="color:var(--muted);margin-top:6px">Live moments, celebrity mentions and festival activations</div>
+              </div>
+              <div style="text-align:right;color:var(--coke-red);font-weight:800">+72%</div>
+            </div>
+            <div style="margin-top:12px" class="charts">
+              <div>
+                <div style="height:72px;display:flex;align-items:end;gap:8px">
+                  <div style="flex:1;height:36%;background:#f97316;border-radius:6px"></div>
+                  <div style="flex:1;height:48%;background:#fb7185;border-radius:6px"></div>
+                  <div style="flex:1;height:28%;background:#f59e0b;border-radius:6px"></div>
+                  <div style="flex:1;height:62%;background:#ef4444;border-radius:6px"></div>
+                </div>
+              </div>
+              <div>
+                <div style="font-size:13px;color:var(--muted)">Top mentions</div>
+                <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+                  <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Super Bowl</span>
+                  <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Music Festivals</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="media" class="sphere-section">
+        <div class="content-inner">
+          <h2 class="panel-title">Media</h2>
+          <p class="panel-sub">Landscape, Genres, Preferences</p>
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <div style="font-weight:800;font-size:18px">Platform distribution</div>
+                <div style="color:var(--muted);margin-top:6px">Where conversations are happening</div>
+              </div>
+              <div style="text-align:right;color:var(--consuma-purple);font-weight:800">TikTok 38%</div>
+            </div>
+            <div style="margin-top:12px">
+              <div class="bar-track"><div class="bar-fill" style="width:38%"></div></div>
+              <div style="display:flex;gap:8px;margin-top:8px">
+                <div style="flex:1;color:var(--muted)">TikTok</div>
+                <div style="flex:1;color:var(--muted)">Instagram</div>
+                <div style="flex:1;color:var(--muted)">X</div>
+                <div style="flex:1;color:var(--muted)">YouTube</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="social-trends" class="sphere-section">
+        <div class="content-inner">
+          <h2 class="panel-title">Social Trends</h2>
+          <p class="panel-sub">Brainrot, Memes, References</p>
+          <div class="card">
+            <div style="display:flex;gap:12px;align-items:center">
+              <div style="flex:1">
+                <div style="font-weight:800">Meme cycles & formats</div>
+                <div style="color:var(--muted);margin-top:6px">Rapid format recycling; short-form humor dominates</div>
+              </div>
+              <div style="font-weight:700;color:#0ea5a4">Viral</div>
+            </div>
+            <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Brainrot</span>
+              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Memes</span>
+              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Nostalgia</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- competitive removed per updated tab list -->
+    </main>
+  </div>
+  <footer style="text-align:center;padding:18px 0;color:var(--muted);font-weight:600">Insights Powered by Consuma</footer>
+
+  <script>
+    // Release schedule (months 0-based)
+    const releaseSchedule = {
+      consumer: new Date(2026,1,11,17,30),
+      brands: new Date(2026,1,12,17,30),
+      // rest will be filled
+    };
+    const rest = ['marketing','fnb','events','media','social-trends','competitive'];
+    (function fill(){
+      let last = releaseSchedule.brands;
+      for(const id of rest){
+        if(!releaseSchedule[id]){
+          last = new Date(last.getTime() + 24*60*60*1000);
+          releaseSchedule[id] = last;
+        }
+      }
+    })();
+
+    function pad2(n){return String(n).padStart(2,'0')}
+    function formatMs(ms){
+      if(ms<0) ms=0;
+      const s=Math.floor(ms/1000);
+      const d=Math.floor(s/86400);
+      const h=Math.floor((s%86400)/3600);
+      const m=Math.floor((s%3600)/60);
+      const sec=s%60;
+      if(d>0) return `${d}d ${pad2(h)}:${pad2(m)}:${pad2(sec)}`;
+      return `${pad2(h)}:${pad2(m)}:${pad2(sec)}`;
+    }
+
+    function escapeHtml(s){return String(s||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+    function applyComing(sectionId){
+      const section=document.getElementById(sectionId);
+      const title = sectionId.replace('-',' ').replace(/\b\w/g,l=>l.toUpperCase());
+      const subtitleMap={
+        'events':'Social, Entertainment, Celebs',
+        'media':'Landscape, Genres, Preferences',
+        'social-trends':'Brainrot, Memes, References',
+        'competitive':'Market Dynamics, Share'
+      };
+      const release=releaseSchedule[sectionId];
+      const diff=release - Date.now();
+      // replace inner content with title/subtitle and either date or countdown
+      section.innerHTML = `<div class="content-inner"><h2 class="panel-title">${escapeHtml(title)}</h2><p class="panel-sub">${escapeHtml(subtitleMap[sectionId]||'')}</p></div>`;
+      const container = section.querySelector('.content-inner');
+      if(diff>24*60*60*1000){
+        const opts={day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'};
+        const node=document.createElement('div'); node.className='overlay-card muted'; node.innerHTML=`Unlocks ${release.toLocaleString(undefined,opts)}`; section.appendChild(node);
+      } else {
+        // within 24h: show countdown card and keep content blurred (preview)
+        container.classList.add('preview-mode');
+        const overlay=document.createElement('div'); overlay.className='overlay-back';
+        overlay.innerHTML=`<div class="overlay-card"><div class="big" id="cd-${sectionId}">${formatMs(diff)}</div><div class="muted">Unlocks in</div></div>`;
+        section.appendChild(overlay);
+      }
+    }
+
+    function removeLock(sectionId){
+      const section=document.getElementById(sectionId);
+      // restore original content if needed by reloading page or keep as-is; for simplicity remove preview overlay
+      const inner=section.querySelector('.content-inner');
+      if(inner) inner.classList.remove('preview-mode');
+      const back = section.querySelector('.overlay-back'); if(back) back.remove();
+      const card = section.querySelector('.overlay-card.muted'); if(card) card.remove();
+    }
+
+    function update(){
+      const now=Date.now();
+      // update postits badges and states
+      document.querySelectorAll('.postit').forEach(p=>{
+        const id=p.getAttribute('data-sphere');
+        const rel=releaseSchedule[id];
+        if(!rel) return;
+        const diff=rel - now;
+        p.classList.remove('coming-soon');
+        if(diff>0){
+          if(diff>24*60*60*1000) p.classList.add('coming-soon');
+        }
+      });
+
+      // sections
+      document.querySelectorAll('.sphere-section').forEach(s=>{
+        const id=s.id;
+        const rel=releaseSchedule[id];
+        if(!rel) return;
+        const diff=rel - now;
+        if(diff<=0){
+          removeLock(id);
+        } else {
+          // if >24h or <=24h applycoming
+          applyComing(id);
+        }
+      });
+
+      // update countdown numbers for any visible cards
+      document.querySelectorAll('[id^=\"cd-\"]').forEach(el=>{
+        const id = el.id.replace('cd-','');
+        const rel=releaseSchedule[id];
+        if(!rel) return;
+        el.textContent = formatMs(rel - Date.now());
+      });
+    }
+
+    // initial seed: populate empty sections with their static title/sub to match request
+    ['events','media','social-trends','competitive'].forEach(id=>{
+      const sec=document.getElementById(id);
+      if(sec) sec.innerHTML = `<div class="content-inner"><h2 class="panel-title">${escapeHtml(id.replace('-',' ').replace(/\b\w/g,l=>l.toUpperCase()))}</h2><p class="panel-sub">${escapeHtml({
+        'events':'Social, Entertainment, Celebs',
+        'media':'Landscape, Genres, Preferences',
+        'social-trends':'Brainrot, Memes, References',
+        'competitive':'Market Dynamics, Share'
+      }[id])}</p></div>`;
+    });
+
+    // run updater every second
+    update();
+    setInterval(update,1000);
+
+    // click handling
+    document.querySelectorAll('.postit').forEach(p=>{
+      p.addEventListener('click',()=>{
+        document.querySelectorAll('.postit').forEach(x=>x.classList.remove('active'));
+        p.classList.add('active');
+        const id=p.getAttribute('data-sphere');
+        document.querySelectorAll('.sphere-section').forEach(s=>s.classList.remove('active'));
+        const sec=document.getElementById(id);
+        if(sec) sec.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
+
