@@ -3,616 +3,2625 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Insights Dossier | Coca-Cola × consuma</title>
+  <title>Insights Dossier | Coca-Cola × Consuma</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@400;600;700;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Twemoji for iOS-style emojis -->
+  <script src="https://cdn.jsdelivr.net/npm/@twemoji/api@latest/dist/twemoji.min.js" crossorigin="anonymous"></script>
   <style>
-    /* Design tokens */
-    :root{
-      --coke-red:#E51B17;
-      --consuma-purple:#5B2C6F;
-      --paper:#FBF5EE;
-      --bg:#f4efe6;
-      --card:#FFFDF7;
-      --ink:#0f1720;
-      --muted:#6b7280;
-      --accent:var(--consuma-purple);
+    /* ========================================
+       DESIGN TOKENS - Mobbin-inspired
+       ======================================== */
+    :root {
+      /* Colors - High contrast, minimal */
+      --bg: #FFFFFF;
+      --card: #FFFFFF;
+      --text: #000000;
+      --muted: #71717A;
+      --border: #E4E4E7;
+      --border-light: #F4F4F5;
+      
+      /* Brand accents - Used sparingly */
+      --coke-red: #DC2626;
+      --consuma-purple: #7C3AED;
+      
+      /* Semantic */
+      --accent: #000000;
+      --success: #16A34A;
+      --warning: #CA8A04;
+      
+      /* Spacing (8px grid) - More generous */
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 24px;
+      --space-6: 32px;
+      --space-7: 48px;
+      --space-8: 64px;
+      --space-9: 80px;
+      
+      /* Typography */
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --text-xs: 12px;
+      --text-sm: 13px;
+      --text-base: 15px;
+      --text-lg: 17px;
+      --text-xl: 20px;
+      --text-2xl: 28px;
+      --text-3xl: 40px;
+      --text-4xl: 56px;
+      
+      /* Shadows - Subtle */
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.03);
+      --shadow: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,0.08);
+      
+      /* Radius - Softer */
+      --radius-sm: 8px;
+      --radius: 12px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
-      background:var(--bg);
-      color:var(--ink);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
+    /* ========================================
+       RESET & BASE
+       ======================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
     
-
-    header{
-      background:var(--card);
-      border-bottom:1px solid #e6e9ee;
-      padding:18px 24px;
-      display:grid;
-      grid-template-columns: 220px 1fr 220px;
-      align-items:center;
-      gap:12px;
+    html {
+      height: 100%;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+      -webkit-tap-highlight-color: transparent;
     }
-    .brand{display:flex;gap:12px;align-items:center;justify-self:start}
-    .brand img{height:30px;object-fit:contain}
-    .logo-coke{height:34px}
-    .logo-consuma{height:34px}
-    .logo-divider{font-family:'Playfair Display',serif;color:var(--muted);margin:0 8px;font-weight:700;font-size:20px}
-    .title{font-weight:900;font-size:28px;justify-self:center;letter-spacing:-0.02em}
-    .subtitle{color:var(--muted);font-size:13px;margin:2px 0 0;justify-self:center}
+    
+    body {
+      min-height: 100%;
+      font-family: var(--font);
+      font-size: var(--text-base);
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+      letter-spacing: -0.01em;
+      overscroll-behavior-y: contain;
+      position: relative;
+    }
+    
+    /* Gradient background layer */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: 
+        /* Top-left purple glow (Consuma C curve) */
+        radial-gradient(ellipse 80% 60% at 10% 20%, rgba(124, 58, 237, 0.35) 0%, transparent 55%),
+        /* Bottom-right red glow */
+        radial-gradient(ellipse 70% 50% at 90% 80%, rgba(220, 38, 38, 0.30) 0%, transparent 55%),
+        /* Center subtle blend */
+        radial-gradient(ellipse 100% 80% at 50% 100%, rgba(220, 38, 38, 0.20) 0%, transparent 45%),
+        /* Top purple curve */
+        radial-gradient(ellipse 60% 40% at 0% 0%, rgba(124, 58, 237, 0.25) 0%, transparent 50%),
+        /* Mid-left purple accent */
+        radial-gradient(ellipse 50% 60% at 5% 60%, rgba(124, 58, 237, 0.18) 0%, transparent 50%),
+        /* Bottom-left purple for footer area */
+        radial-gradient(ellipse 60% 40% at 10% 95%, rgba(124, 58, 237, 0.20) 0%, transparent 50%),
+        /* Soft overall wash */
+        linear-gradient(135deg, rgba(124, 58, 237, 0.08) 0%, rgba(255, 255, 255, 0) 50%, rgba(220, 38, 38, 0.08) 100%);
+      pointer-events: none;
+    }
+    
+    /* Touch-friendly button states */
+    button, .nav-tab, .tag {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    
+    .nav-tab:active {
+      transform: scale(0.97);
+    }
+    
+    .card:active {
+      transform: scale(0.995);
+    }
 
-    /* Overview banner (summary of datapoints) */
-    .overview {
-      max-width: 1100px;
-      margin: 18px auto;
-      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.99));
-      border: 1px solid rgba(16,24,40,0.06);
-      padding: 22px 28px;
-      border-radius: 8px;
+    /* ========================================
+       LAYOUT
+       ======================================== */
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 var(--space-7);
+    }
+
+    /* ========================================
+       STICKY WRAPPER
+       ======================================== */
+    .sticky-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .sticky-wrapper.scrolled {
+      background: rgba(255,255,255,0.92);
+      box-shadow: 0 1px 20px rgba(0,0,0,0.08);
+    }
+
+    /* ========================================
+       HEADER
+       ======================================== */
+    .header {
+      background: #ffffff;
+      border-bottom: 1px solid rgba(228, 228, 231, 0.4);
+      padding: var(--space-6) 0 var(--space-5);
+    }
+    
+    .header-inner {
       display: flex;
-      gap: 28px;
+      flex-direction: column;
+      gap: var(--space-5);
+    }
+    
+    .header-top {
+      display: flex;
       align-items: center;
-      box-shadow: 0 18px 40px rgba(16,24,40,0.06);
-      min-height: 110px;
+      justify-content: space-between;
+      gap: var(--space-7);
     }
-    .overview::before{
-      content:'';
-      position:absolute;
-      left:50%;
-      transform:translateX(-50%);
+    
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
     }
-    .overview .brand-inline{display:flex;gap:12px;align-items:center;margin-bottom:8px}
-    .overview .brand-inline img{height:28px}
-    .overview .brand-inline .divider-vert { width:1px; height:28px; background:rgba(16,24,40,0.12); margin:0 8px; border-radius:1px; }
-    .overview .left {
-      flex:1;
+    
+    .brand-logos {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
     }
-    .overview .left h3 { margin:0; font-family:'Playfair Display',serif; font-size:20px; font-weight:800; }
-    .overview .left p { margin:6px 0 0; color:var(--muted); font-size:13px; font-family: 'Roboto Mono', monospace; }
-    .overview .metrics { display:flex; gap:22px; align-items:center; }
-    .overview .metric { text-align:center; min-width:120px; }
-    .overview .metric .value { font-size:22px; font-weight:800; font-family:'Playfair Display', serif; color:var(--ink); }
-    .overview .metric .label { font-size:12px; color:var(--muted); font-family: 'Roboto Mono', monospace; margin-top:4px; }
-    .overview .meta { margin-left:auto; text-align:right; color:var(--muted); font-family: 'Roboto Mono', monospace; font-size:12px; }
-
-    /* Layout */
-    .dossier{
-      max-width:1100px;
-      margin:20px auto;
-      display:flex;
-      flex-direction:column;
-      min-height:calc(100vh - 120px);
-      background:transparent;
+    
+    .brand-logos img {
+      height: 36px;
+      object-fit: contain;
     }
-    @media(min-width:780px){.dossier{flex-direction:row;gap:20px;align-items:flex-start}}
-
-    .content{
-      flex:1;
-      background:var(--paper);
-      border:1px solid rgba(16,24,40,0.04);
-      padding:24px;
-      min-width:0;
-      border-radius:10px;
-      box-shadow: 0 12px 34px rgba(16,24,40,0.03);
+    
+    .brand-divider {
+      width: 1px;
+      height: 32px;
+      background: var(--border);
     }
-    .sidebar{
-      display:flex;
-      gap:10px;
-      padding:12px;
-      overflow:auto;
-      align-items:center;
-      background:transparent;
-      order:-1; /* on mobile show above content */
+    
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 400;
+      color: var(--text);
+      letter-spacing: -0.01em;
     }
-    @media(min-width:780px){
-      .sidebar{flex-direction:column;width:220px;order:2;padding:18px;border-left:1px solid #e6e9ee}
-      .content{order:1}
+    
+    .metrics-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-8);
+    }
+    
+    .metric {
+      text-align: center;
+    }
+    
+    .metric-value {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.1;
+      font-variant-numeric: tabular-nums;
+    }
+    
+    .metric-label {
+      font-size: var(--text-xs);
+      font-weight: 500;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: var(--space-2);
+    }
+    
+    .header-description {
+      font-size: var(--text-sm);
+      color: var(--muted);
+      line-height: 1.5;
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--border-light);
+    }
+    
+    .header-description strong {
+      color: var(--text);
+      font-weight: 600;
     }
 
-    /* Post-it / tab card */
-    .postit{
-      --accent:var(--accent);
-      width:180px;
-      height:56px;
-      padding:10px 14px;
-      background:linear-gradient(180deg,var(--card),#fff);
-      border-left:6px solid var(--accent);
-      border-radius:6px;
-      box-shadow:0 8px 20px rgba(15,23,42,0.06);
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      flex-shrink:0;
-      transition:transform .18s ease,box-shadow .18s ease,border-left-width .18s ease;
-      font-family:'Playfair Display', serif;
-      font-size:15px;
+    /* ========================================
+       NAVIGATION TABS - Compact Pills
+       ======================================== */
+    .nav {
+      background: #ffffff;
+      border-bottom: 1px solid rgba(228, 228, 231, 0.3);
+      padding: var(--space-3) 0;
     }
-    .postit:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(15,23,42,0.08)}
-    .postit.active{border-left-width:10px;box-shadow:0 20px 50px rgba(15,23,42,0.12)}
-    .postit .title{font-size:15px;font-weight:700;text-align:center}
-    .postit.small{width:140px;height:44px;padding:8px 10px}
-    @media(max-width:779px){.postit{width:120px;height:48px;padding:8px 10px;border-radius:6px}}
+    
+    .nav-tabs {
+      display: flex;
+      gap: var(--space-2);
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding: var(--space-1) 0;
+    }
+    
+    .nav-tabs::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .nav-tab {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: var(--muted);
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(228, 228, 231, 0.5);
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    
+    .nav-tab:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.85);
+      border-color: rgba(0,0,0,0.2);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    
+    .nav-tab.active {
+      color: var(--card);
+      background: var(--text);
+      border-color: var(--text);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+    
+    .nav-tab.active .nav-tab-icon {
+      background: transparent;
+    }
+    
+    .nav-tab-icon {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border-radius: var(--radius-full);
+      font-size: 14px;
+      transition: background 0.15s ease;
+    }
+    
+    .nav-tab:hover .nav-tab-icon {
+      background: transparent;
+    }
+    
+    .nav-tab.active:hover .nav-tab-icon {
+      background: transparent;
+    }
+    
+    .nav-tab-label {
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+    
+    .nav-tab.coming-soon {
+      opacity: 0.5;
+      cursor: default;
+    }
+    
+    .nav-tab.coming-soon:hover {
+      color: var(--muted);
+      border-color: var(--border);
+      box-shadow: none;
+    }
+    
+    .nav-tab .emoji {
+      font-size: var(--text-base);
+    }
 
-    /* Muted coming soon */
-    .postit.coming-soon{opacity:.65;filter:grayscale(.15);border-left-color:#cbd5e1;cursor:pointer}
-    .badge{position:absolute;font-size:11px;color:var(--muted);right:8px;top:6px;font-weight:600}
+    /* ========================================
+       MAIN CONTENT
+       ======================================== */
+    .main {
+      padding: var(--space-8) 0 var(--space-9);
+    }
+    
+    .section {
+      display: none;
+    }
+    
+    .section.active {
+      display: block;
+    }
+    
+    .section-header {
+      margin-bottom: var(--space-7);
+      text-align: center;
+    }
+    
+    .section-title {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: var(--space-2);
+      letter-spacing: -0.02em;
+    }
+    
+    .section-subtitle {
+      font-size: var(--text-base);
+      color: var(--muted);
+    }
 
-    /* Sections */
-    .sphere-section{display:none;position:relative;padding-bottom:18px}
-    .sphere-section.active{display:block}
-    .panel-title{font-family:'Playfair Display', serif;font-size:20px;font-weight:800;margin:0 0 6px}
-    .title, .panel-title { font-family: 'Playfair Display', serif; }
-    .panel-sub{font-family:'Roboto Mono', monospace;color:var(--muted);margin:0 0 18px}
-    .card{background:var(--card);border:1px solid #eef2f6;padding:14px;border-radius:8px;margin-bottom:12px}
-
-    /* Lists */
-    .insight-list{display:flex;flex-direction:column;gap:10px}
-    .insight-item{display:flex;gap:12px;align-items:flex-start;background:#fbfdff;padding:12px;border-radius:8px;border:1px solid #f0f4f8}
-    .insight-num{width:28px;height:28px;background:var(--accent);color:white;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700}
-
-    /* charts small */
-    .charts{display:grid;grid-template-columns:1fr;gap:12px}
-    @media(min-width:640px){.charts{grid-template-columns:1fr 1fr}}
-    .bar-track{height:18px;background:#eef2f6;border-radius:6px;overflow:hidden}
-    .bar-fill{height:100%;background:var(--accent);border-radius:6px}
-
-    /* Preview / coming overlays */
-    .content-inner.preview-mode{filter:blur(3px);pointer-events:none;opacity:.95}
-    .overlay-back{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:6}
-    .overlay-card{background:var(--card);padding:18px 22px;border-radius:10px;box-shadow:0 18px 48px rgba(15,23,42,0.12);text-align:center;min-width:220px}
-    .overlay-card .big{font-size:20px;font-weight:800}
-    .overlay-card .muted{color:var(--muted);margin-top:8px}
-    footer{color:var(--muted);font-size:13px;margin-top:18px}
-
-    /* Mobile bottom tab bar */
-    @media(max-width:899px){
-      .sidebar{
-        position:fixed;
-        left:12px;
-        right:12px;
-        bottom:12px;
-        display:flex;
-        gap:10px;
-        padding:8px;
-        background:transparent;
-        border-radius:10px;
-        z-index:80;
-        justify-content:space-between;
-        box-shadow:0 12px 30px rgba(15,23,42,0.06);
+    /* ========================================
+       INSIGHT CARDS
+       ======================================== */
+    .cards-grid {
+      display: grid;
+      gap: var(--space-5);
+    }
+    
+    @media (min-width: 768px) {
+      .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
+    }
+    
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      transition: border-color 0.2s ease;
+    }
+    
+    .card:hover {
+      border-color: var(--text);
+    }
+    
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-4);
+      margin-bottom: var(--space-5);
+    }
+    
+    .card-icon {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--border-light);
+      border-radius: var(--radius);
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    
+    .card-title-group {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .card-title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: var(--space-1);
+    }
+    
+    .card-subtitle {
+      font-size: var(--text-sm);
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+    
+    .card-metric {
+      text-align: right;
+      flex-shrink: 0;
+    }
+    
+    .card-metric-value {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 400;
+      line-height: 1;
+    }
+    
+    .card-metric-value.red { color: var(--coke-red); }
+    .card-metric-value.purple { color: var(--consuma-purple); }
+    .card-metric-value.green { color: var(--success); }
+    .card-metric-value.orange { color: var(--warning); }
+    
+    .card-body {
+      font-size: var(--text-base);
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: var(--space-5);
+    }
+    
+    .card-body strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+    
+    .card-chart {
+      margin: var(--space-5) 0 var(--space-6);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    
+    .card-action {
+      background: var(--border-light);
+      border-left: 3px solid var(--coke-red);
+      padding: var(--space-4) var(--space-5);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin-top: var(--space-5);
+      margin-bottom: var(--space-5);
+    }
+    
+    .card-action-label {
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: var(--space-2);
+    }
+    
+    .card-action-text {
+      font-size: var(--text-sm);
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    
+    .card-action-text strong {
+      color: var(--text);
+    }
+    
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+    
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
+      font-size: var(--text-xs);
+      font-weight: 500;
+      color: var(--muted);
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-full);
+      transition: all 0.15s ease;
+    }
+    
+    .tag:hover {
+      border-color: var(--text);
+      color: var(--text);
+    }
+
+    /* ========================================
+       CHARTS
+       ======================================== */
+    .area-chart {
+      width: 100%;
+      height: 100px;
+    }
+    
+    .bar-chart {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+    
+    .bar-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+    
+    .bar-label {
+      font-size: var(--text-sm);
+      color: var(--muted);
+      width: 80px;
+      flex-shrink: 0;
+    }
+    
+    .bar-track {
+      flex: 1;
+      height: 6px;
+      background: var(--border);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+    
+    .bar-fill {
+      height: 100%;
+      border-radius: var(--radius-full);
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .bar-fill.red { background: var(--coke-red); }
+    .bar-fill.purple { background: var(--consuma-purple); }
+    .bar-fill.gray { background: var(--muted); }
+    .bar-fill.green { background: var(--success); }
+    
+    .bar-value {
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: var(--text);
+      width: 40px;
+      text-align: right;
+    }
+    
+    /* Donut Chart */
+    .donut-chart {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+      margin-bottom: var(--space-4);
+    }
+    
+    .donut-visual {
+      width: 80px;
+      height: 80px;
+      flex-shrink: 0;
+    }
+    
+    .donut-legend {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+    
+    .donut-legend-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    
+    .donut-legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    
+    .donut-legend-label {
+      font-size: var(--text-sm);
+      color: var(--muted);
+    }
+    
+    .donut-legend-value {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--text);
+      margin-left: auto;
+    }
+
+    /* ========================================
+       PREVIEW / COMING SOON OVERLAYS
+       ======================================== */
+    .section-locked {
+      position: relative;
+    }
+    
+    .section-locked .content-blur {
+      filter: blur(6px);
+      pointer-events: none;
+      opacity: 0.5;
+    }
+    
+    .lock-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+    
+    .lock-card {
+      background: var(--card);
+      padding: var(--space-7) var(--space-8);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      text-align: center;
+    }
+    
+    .lock-icon {
+      font-size: 28px;
+      margin-bottom: var(--space-4);
+    }
+    
+    .lock-title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: var(--space-2);
+    }
+    
+    .lock-countdown {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 400;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+    }
+    
+    .lock-subtitle {
+      font-size: var(--text-sm);
+      color: var(--muted);
+      margin-top: var(--space-3);
+    }
+
+    /* ========================================
+       FOOTER
+       ======================================== */
+    .footer {
+      text-align: center;
+      padding: var(--space-9) 0;
+      border-top: 1px solid rgba(228, 228, 231, 0.3);
+      background: transparent;
+      position: relative;
+    }
+    
+    .footer-text {
+      font-size: var(--text-base);
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+    
+    .footer-text strong {
+      color: var(--consuma-purple);
+      font-weight: 600;
+    }
+    
+    .consuma-link {
+      position: relative;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: baseline;
+    }
+    
+    .consuma-link:hover strong {
+      opacity: 0.8;
+    }
+    
+    .external-arrow {
+      width: 10px;
+      height: 10px;
+      margin-left: 2px;
+      position: relative;
+      top: -4px;
+      color: var(--consuma-purple);
+      opacity: 0.7;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    
+    .consuma-link:hover .external-arrow {
+      opacity: 1;
+      transform: translate(1px, -1px);
+    }
+
+    /* ========================================
+       MOBILE RESPONSIVE
+       ======================================== */
+    
+    /* Smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    /* Tablet breakpoint */
+    @media (max-width: 1024px) {
+      .container {
+        padding: 0 var(--space-6);
+      }
+      
+      .header-top {
+        gap: var(--space-5);
+      }
+      
+      .metrics-bar {
+        gap: var(--space-5);
+      }
+      
+      .metric-value {
+        font-size: var(--text-2xl);
+      }
+    }
+    
+    /* Mobile breakpoint */
+    @media (max-width: 768px) {
+      :root {
+        --text-3xl: 32px;
+        --text-4xl: 40px;
+      }
+      
+      .container {
+        padding: 0 var(--space-4);
+      }
+      
+      /* Header - Mobile */
+      .header {
+        padding: var(--space-4) 0;
+      }
+      
+      .header-inner {
+        gap: var(--space-3);
+      }
+      
+      .header-top {
+        flex-direction: column;
+        gap: var(--space-4);
+      }
+      
+      .brand {
+        width: 100%;
+        justify-content: center;
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+      
+      .brand-logos {
+        gap: var(--space-3);
+      }
+      
+      .brand-logos img {
+        height: 24px;
+      }
+      
+      .brand-divider {
+        height: 20px;
+      }
+      
+      .brand-title {
+        font-size: var(--text-lg);
+      }
+      
+      .metrics-bar {
+        width: 100%;
+        justify-content: center;
+        gap: var(--space-6);
+      }
+      
+      .metric-value {
+        font-size: var(--text-xl);
+      }
+      
+      .metric-label {
+        font-size: 10px;
+        margin-top: var(--space-1);
+      }
+      
+      .header-description {
+        display: none;
+      }
+      
+      /* Navigation - Mobile */
+      .nav {
+        padding: var(--space-2) 0;
+      }
+      
+      .nav-tabs {
+        padding: var(--space-1) var(--space-4);
+        margin: 0 calc(-1 * var(--space-4));
+        gap: var(--space-2);
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      .nav-tab {
+        padding: 6px 12px;
+        gap: 6px;
+      }
+      
+      .nav-tab-icon {
+        width: 20px;
+        height: 20px;
+        font-size: 12px;
+      }
+      
+      .nav-tab-label {
+        font-size: 11px;
+        font-weight: 500;
+      }
+      
+      .nav-tab:hover {
+        box-shadow: none;
+      }
+      
+      .nav-tab.active {
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      }
+      
+      /* Main Content - Mobile */
+      .main {
+        padding: var(--space-6) 0 var(--space-7);
+      }
+      
+      .section-header {
+        margin-bottom: var(--space-5);
+      }
+      
+      .section-title {
+        font-size: var(--text-2xl);
+      }
+      
+      .section-subtitle {
+        font-size: var(--text-sm);
+      }
+      
+      /* Cards - Mobile */
+      .cards-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+      }
+      
+      .card {
+        padding: var(--space-4);
+        border-radius: var(--radius);
+      }
+      
+      .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-3);
+      }
+      
+      .card-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+      }
+      
+      .card-title-group {
+        width: 100%;
+      }
+      
+      .card-title {
+        font-size: var(--text-lg);
+      }
+      
+      .card-subtitle {
+        font-size: var(--text-xs);
+      }
+      
+      .card-metric {
+        width: 100%;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        padding: var(--space-3);
+        background: var(--border-light);
+        border-radius: var(--radius-sm);
+      }
+      
+      .card-metric-value {
+        font-size: var(--text-2xl);
+      }
+      
+      .card-metric::before {
+        content: 'Key Metric';
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--muted);
+      }
+      
+      .card-body {
+        font-size: var(--text-sm);
+        margin-bottom: var(--space-4);
+      }
+      
+      .card-chart {
+        margin: var(--space-4) 0;
+      }
+      
+      .card-action {
+        padding: var(--space-3) var(--space-4);
+        margin-top: var(--space-4);
+        margin-bottom: var(--space-4);
+      }
+      
+      .card-action-label {
+        font-size: 10px;
+      }
+      
+      .card-action-text {
+        font-size: var(--text-xs);
+      }
+      
+      .card-tags {
+        gap: var(--space-1);
+      }
+      
+      .tag {
+        padding: 4px 10px;
+        font-size: 10px;
+      }
+      
+      /* Charts - Mobile */
+      .area-chart {
+        height: 80px;
+      }
+      
+      .bar-chart {
+        gap: var(--space-3);
+      }
+      
+      .bar-label {
+        width: 60px;
+        font-size: var(--text-xs);
+      }
+      
+      .bar-track {
+        height: 6px;
+      }
+      
+      .bar-value {
+        width: 36px;
+        font-size: var(--text-xs);
+      }
+      
+      .donut-chart {
+        flex-direction: column;
+        gap: var(--space-4);
+        align-items: flex-start;
+      }
+      
+      .donut-visual {
+        width: 64px;
+        height: 64px;
+      }
+      
+      .donut-legend {
+        gap: var(--space-2);
+      }
+      
+      .donut-legend-item {
+        gap: var(--space-2);
+      }
+      
+      .donut-legend-dot {
+        width: 6px;
+        height: 6px;
+      }
+      
+      .donut-legend-label,
+      .donut-legend-value {
+        font-size: var(--text-xs);
+      }
+      
+      /* Custom Visualizations - Mobile */
+      .heat-cool-viz {
+        padding: var(--space-4);
+        flex-wrap: wrap;
+        gap: var(--space-3);
+      }
+      
+      .heat-icon, .cool-icon {
+        font-size: 22px;
+      }
+      
+      .chaos-viz {
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--space-2);
+        padding: var(--space-3);
+      }
+      
+      .chaos-item {
+        font-size: 18px;
+        padding: var(--space-2);
+      }
+      
+      .flavor-bars {
+        height: 40px;
+        padding: var(--space-3);
+      }
+      
+      .focus-viz {
+        padding: var(--space-4);
+        gap: var(--space-3);
+      }
+      
+      .focus-stage-icon {
+        font-size: 16px;
+      }
+      
+      .focus-stage-label {
+        font-size: 10px;
+      }
+      
+      .focus-connector {
+        font-size: 12px;
+      }
+      
+      /* Full-width card override */
+      .card[style*="grid-column"] {
+        grid-column: 1 !important;
+      }
+      
+      /* Media section boxes */
+      .card > div[style*="display: grid"] {
+        grid-template-columns: 1fr !important;
+        gap: var(--space-3) !important;
+      }
+      
+      .card > div[style*="display: grid"] > div {
+        padding: var(--space-3) !important;
+      }
+      
+      .card > div[style*="display: grid"] .bar-label {
+        width: 80px !important;
+      }
+      
+      /* Lock overlay - Mobile */
+      .lock-card {
+        padding: var(--space-5) var(--space-6);
+        margin: 0 var(--space-4);
+      }
+      
+      .lock-icon {
+        font-size: 24px;
+      }
+      
+      .lock-title {
+        font-size: var(--text-lg);
+      }
+      
+      .lock-countdown {
+        font-size: var(--text-xl);
+      }
+      
+      /* Footer - Mobile */
+      .footer {
+        padding: var(--space-6) 0;
+      }
+      
+      .footer-text {
+        font-size: var(--text-xs);
+      }
+    }
+    
+    /* Small mobile breakpoint */
+    @media (max-width: 380px) {
+      .container {
+        padding: 0 var(--space-3);
+      }
+      
+      .brand-logos img {
+        height: 20px;
+      }
+      
+      .brand-title {
+        font-size: var(--text-base);
+      }
+      
+      .metrics-bar {
+        gap: var(--space-4);
+      }
+      
+      .metric-value {
+        font-size: var(--text-lg);
+      }
+      
+      .nav-tab {
+        padding: 5px 10px;
+        gap: 4px;
+      }
+      
+      .nav-tab-icon {
+        width: 16px;
+        height: 16px;
+        font-size: 10px;
+      }
+      
+      .nav-tab-label {
+        font-size: 10px;
+      }
+      
+      .card {
+        padding: var(--space-3);
+      }
+      
+      .card-title {
+        font-size: var(--text-base);
+      }
+      
+      .card-metric-value {
+        font-size: var(--text-xl);
+      }
+    }
+
+    /* ========================================
+       ANIMATIONS
+       ======================================== */
+    @keyframes fadeInUp {
+      from { 
+        opacity: 0; 
+        transform: translateY(16px); 
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0); 
+      }
+    }
+    
+    .section {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    
+    .section.active {
+      opacity: 1;
+      transform: translateY(0);
+      animation: fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .section.fade-out {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    
+    /* Animated bar fill */
+    @keyframes barGrow {
+      from { width: 0; }
+    }
+    
+    .bar-fill.animated {
+      animation: barGrow 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+    
+    /* Subtle pulse effect */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    
+    .pulse {
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+    
+    /* Subtle float effect */
+    @keyframes subtleFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-2px); }
+    }
+    
+    .heat-shimmer {
+      animation: subtleFloat 2s ease-in-out infinite;
+    }
+    
+    /* Gradient shift */
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    .gradient-animated {
+      background-size: 200% 200%;
+      animation: gradientShift 4s ease infinite;
+    }
+    
+    /* Cool wave effect */
+    @keyframes coolWave {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    
+    /* Smooth scale in */
+    @keyframes scaleIn {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    
+    .bounce-in {
+      animation: scaleIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* Visual indicator styles */
+    .viz-container {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: var(--space-5) 0;
+    }
+    
+    .heat-cool-viz {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-5);
+      padding: var(--space-6);
+      background: var(--border-light);
+      border-radius: var(--radius);
+      margin-bottom: var(--space-5);
+    }
+    
+    .heat-icon, .cool-icon {
+      font-size: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .heat-icon {
+      animation: subtleFloat 2s ease-in-out infinite;
+    }
+    
+    .cool-icon {
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+    
+    .flow-arrow {
+      font-size: 20px;
+      color: var(--muted);
+    }
+    
+    /* Chaos visual */
+    .chaos-viz {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-3);
+      padding: var(--space-4);
+      background: var(--border-light);
+      border-radius: var(--radius);
+      margin-bottom: var(--space-5);
+    }
+    
+    .chaos-item {
+      font-size: 22px;
+      text-align: center;
+      padding: var(--space-3);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: all 0.2s ease;
+    }
+    
+    .chaos-item:hover {
+      border-color: var(--text);
+    }
+    
+    /* Flavor profile viz */
+    .flavor-bars {
+      display: flex;
+      gap: 2px;
+      height: 48px;
+      align-items: flex-end;
+      padding: var(--space-4);
+      background: var(--border-light);
+      border-radius: var(--radius);
+      margin-bottom: var(--space-3);
+    }
+    
+    .flavor-bar {
+      flex: 1;
+      border-radius: 2px 2px 0 0;
+      transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* Focus trigger viz */
+    .focus-viz {
+      display: flex;
+      align-items: center;
+      gap: var(--space-5);
+      padding: var(--space-5);
+      background: var(--border-light);
+      border-radius: var(--radius);
+      margin-bottom: var(--space-5);
+    }
+    
+    .focus-stages {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      flex: 1;
+    }
+    
+    .focus-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+      flex: 1;
+    }
+    
+    .focus-stage-icon {
+      font-size: 20px;
+    }
+    
+    .focus-stage-label {
+      font-size: var(--text-xs);
+      color: var(--muted);
+      text-align: center;
+      letter-spacing: 0.02em;
+    }
+    
+    .focus-connector {
+      color: var(--border);
+      font-size: 14px;
+    }
+    
+    /* Twemoji - iOS style emoji sizing */
+    img.emoji {
+      height: 1em;
+      width: 1em;
+      margin: 0 0.05em 0 0.1em;
+      vertical-align: -0.1em;
+    }
+    
+    .card-icon img.emoji {
+      height: 1.3em;
+      width: 1.3em;
+    }
+    
+    .nav-tab-icon img.emoji {
+      height: 1.2em;
+      width: 1.2em;
+    }
+    
+    .heat-icon img.emoji,
+    .cool-icon img.emoji,
+    .chaos-item img.emoji,
+    .focus-stage-icon img.emoji {
+      height: 1.1em;
+      width: 1.1em;
+    }
+    
+    /* Animated counter styles */
+    .counter {
+      font-variant-numeric: tabular-nums;
+    }
+    
+    .text-cycle {
+      display: inline-block;
+      min-width: 60px;
     }
   </style>
 </head>
 <body>
-  
-
-  
-  <div class="overview">
-    <div class="left">
-      <div class="brand-inline">
-        <img src="./assets/consuma.png" alt="consuma" />
-        <div class="divider-vert" aria-hidden="true"></div>
-        <img src="./assets/coca.png" alt="Coca-Cola" />
-      </div>
-      <h3>Insights Dossier</h3>
-      <p>Strategic insights across consumer behavior, brand performance, cultural trends, and market dynamics. Updated February 2026.</p>
-    </div>
-    <div class="metrics">
-      <div class="metric"><div class="value">31</div><div class="label">Total insights</div></div>
-      <div class="metric"><div class="value">14.2M</div><div class="label">Data points analyzed</div></div>
-      <div class="metric"><div class="value">7</div><div class="label">Areas of interest</div></div>
-    </div>
-  </div>
-
-  <div class="dossier">
-    <aside class="sidebar" aria-hidden="false">
-      <div class="postit active" data-sphere="consumer" style="--accent:var(--consuma-purple)">
-        <div class="title">👤 The Consumer</div>
-      </div>
-      <div class="postit" data-sphere="brands" style="--accent:var(--coke-red)">
-        <div class="title">🏷️ Brands</div>
-      </div>
-      <div class="postit" data-sphere="marketing" style="--accent:var(--consuma-purple)">
-        <div class="title">💡 Marketing Inspiration</div>
-      </div>
-      <div class="postit" data-sphere="fnb" style="--accent:#1f2937">
-        <div class="title">🍽️ F&B</div>
-      </div>
-      <div class="postit coming-soon" data-sphere="events" style="--accent:#9CA3AF">
-        <div class="title">🎉 Events</div>
-      </div>
-      <div class="postit coming-soon" data-sphere="media" style="--accent:#9CA3AF">
-        <div class="title">📺 Media</div>
-      </div>
-      <div class="postit coming-soon" data-sphere="social-trends" style="--accent:#9CA3AF">
-        <div class="title">📱 Social Trends</div>
-      </div>
-    </aside>
-
-    <main class="content" id="main">
-      <!-- Consumer (unlocked) -->
-      <section id="consumer" class="sphere-section active">
-        <div class="content-inner">
-          <h2 class="panel-title">The Consumer</h2>
-          <p class="panel-sub">Sentiment, Recent Events, Preferences</p>
-
-          <!-- Insight 01 -->
-          <div class="card">
-            <div style="display:flex;gap:12px;align-items:center">
-              <div style="width:54px;height:54px;background:#fff;border-radius:8px;border:1px solid #f0f2f5;display:flex;align-items:center;justify-content:center;font-size:22px">👶</div>
-              <div style="flex:1">
-                <div style="font-weight:800;font-size:18px">The Consultant Child (Gen Alpha Authority)</div>
-                <div style="color:var(--muted);margin-top:6px">Gen Alpha influences household purchasing decisions across categories.</div>
+  <!-- Sticky Header Wrapper -->
+  <div class="sticky-wrapper">
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <div class="header-inner">
+          <div class="header-top">
+            <div class="brand">
+              <div class="brand-logos">
+                <img src="./assets/consuma.png" alt="Consuma" />
+                <div class="brand-divider"></div>
+                <img src="./assets/coca.png" alt="Coca-Cola" />
               </div>
-              <div style="text-align:right;color:var(--coke-red);font-weight:800;font-size:20px">26%</div>
+              <span class="brand-title">Insights Dossier</span>
             </div>
-            <div style="margin-top:12px">Gen Alpha now acts as an internal consultant; 55% of parents admit to buying items their child recommended.</div>
-            <div style="margin-top:12px">
-              <!-- area chart (SVG) -->
-              <svg viewBox="0 0 600 140" width="100%" height="140" preserveAspectRatio="none" style="margin-top:12px">
+            <div class="metrics-bar">
+              <div class="metric">
+                <div class="metric-value" data-count="31">0</div>
+                <div class="metric-label">Insights</div>
+              </div>
+              <div class="metric">
+                <div class="metric-value" data-count="14.2" data-suffix="M">0</div>
+                <div class="metric-label">Data Points</div>
+              </div>
+              <div class="metric">
+                <div class="metric-value" data-count="7">0</div>
+                <div class="metric-label">Areas</div>
+              </div>
+            </div>
+          </div>
+          <p class="header-description">Strategic intelligence across <strong>consumer behavior</strong>, <strong>brand performance</strong>, <strong>cultural trends</strong>, and <strong>market dynamics</strong> — powered by Consuma's AI-driven social listening platform.</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+    <div class="container">
+      <div class="nav-tabs">
+        <button class="nav-tab active" data-section="consumer">
+          <div class="nav-tab-icon"><span class="emoji">👤</span></div>
+          <span class="nav-tab-label">Consumer</span>
+        </button>
+        <button class="nav-tab" data-section="brands">
+          <div class="nav-tab-icon"><span class="emoji">🏷️</span></div>
+          <span class="nav-tab-label">Brands</span>
+        </button>
+        <button class="nav-tab" data-section="marketing">
+          <div class="nav-tab-icon"><span class="emoji">💡</span></div>
+          <span class="nav-tab-label">Marketing</span>
+        </button>
+        <button class="nav-tab" data-section="fnb">
+          <div class="nav-tab-icon"><span class="emoji">🍽️</span></div>
+          <span class="nav-tab-label">F&B</span>
+        </button>
+        <button class="nav-tab" data-section="events">
+          <div class="nav-tab-icon"><span class="emoji">🎉</span></div>
+          <span class="nav-tab-label">Events</span>
+        </button>
+        <button class="nav-tab" data-section="media">
+          <div class="nav-tab-icon"><span class="emoji">📺</span></div>
+          <span class="nav-tab-label">Media</span>
+        </button>
+        <button class="nav-tab" data-section="social">
+          <div class="nav-tab-icon"><span class="emoji">📱</span></div>
+          <span class="nav-tab-label">Social</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  </div><!-- End sticky-wrapper -->
+
+  <!-- Main Content -->
+  <main class="main">
+    <div class="container">
+      
+      <!-- Consumer Section -->
+      <section id="consumer" class="section active">
+        <div class="section-header">
+          <h1 class="section-title">The Consumer</h1>
+          <p class="section-subtitle">Sentiment, behaviors, preferences, and emerging patterns</p>
+        </div>
+        
+        <div class="cards-grid">
+          <!-- Card 1 -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">👶</div>
+              <div class="card-title-group">
+                <h3 class="card-title">The Consultant Child</h3>
+                <p class="card-subtitle">Gen Alpha Authority</p>
+              </div>
+              <div class="card-metric">
+                <div class="card-metric-value red" data-animate="26%">0%</div>
+              </div>
+            </div>
+            <p class="card-body">Gen Alpha now acts as an internal consultant for household purchases. 55% of parents admit to buying items their child recommended.</p>
+            <div class="card-chart">
+              <svg class="area-chart" viewBox="0 0 400 120" preserveAspectRatio="none">
                 <defs>
-                  <linearGradient id="g1" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stop-color="rgba(229,27,23,0.12)"/>
+                  <linearGradient id="grad1" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="rgba(229,27,23,0.15)"/>
                     <stop offset="100%" stop-color="rgba(229,27,23,0)"/>
                   </linearGradient>
                 </defs>
-                <path d="M0,100 C100,70 200,60 300,50 C400,40 500,60 600,55 L600,140 L0,140 Z" fill="url(#g1)" stroke="none"/>
-                <path d="M0,100 C100,70 200,60 300,50 C400,40 500,60 600,55" fill="none" stroke="#E51B17" stroke-width="2.5" stroke-linecap="round"/>
-                <text x="60" y="130" fill="#6b7280" font-family:'Roboto Mono' font-size="12">Discovery</text>
-                <text x="260" y="130" fill="#6b7280" font-family:'Roboto Mono' font-size="12">Short Video</text>
-                <text x="460" y="130" fill="#6b7280" font-family:'Roboto Mono' font-size="12">Purchase Influence</text>
+                <path d="M0,80 C50,70 100,55 150,45 C200,35 250,40 300,35 C350,30 380,32 400,30 L400,120 L0,120 Z" fill="url(#grad1)"/>
+                <path d="M0,80 C50,70 100,55 150,45 C200,35 250,40 300,35 C350,30 380,32 400,30" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="150" cy="45" r="4" fill="#000000"/>
+                <circle cx="300" cy="35" r="4" fill="#000000"/>
               </svg>
             </div>
-            <div style="margin-top:12px;padding:12px;border-left:4px solid var(--consuma-purple);background:#fff;border-radius:6px">
-              <strong>Strategic action:</strong> Market through expert-led educational content to turn kids into brand advocates.
+            <div class="card-action">
+              <div class="card-action-label">Strategic Action</div>
+              <div class="card-action-text">Market through expert-led educational content to turn kids into brand advocates.</div>
             </div>
-            <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
-              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Gen Alpha</span>
-              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Household</span>
-              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Influence</span>
+            <div class="card-tags">
+              <span class="tag">Gen Alpha</span>
+              <span class="tag">Household</span>
+              <span class="tag">Influence</span>
             </div>
           </div>
 
-          <!-- Insight 02 -->
+          <!-- Card 2 -->
           <div class="card">
-            <div style="display:flex;gap:12px;align-items:center">
-              <div style="width:54px;height:54px;background:#fff;border-radius:8px;border:1px solid #f0f2f5;display:flex;align-items:center;justify-content:center;font-size:22px">💸</div>
-              <div style="flex:1">
-                <div style="font-weight:800;font-size:18px">Financial Nihilism (The Death of Frugality)</div>
-                <div style="color:var(--muted);margin-top:6px">Gen Z prioritizes experiences over saving; discretionary spend rises.</div>
+            <div class="card-header">
+              <div class="card-icon">💸</div>
+              <div class="card-title-group">
+                <h3 class="card-title">Financial Nihilism</h3>
+                <p class="card-subtitle">The Death of Frugality</p>
               </div>
-              <div style="text-align:right;color:var(--consuma-purple);font-weight:800;font-size:20px">~50%</div>
+              <div class="card-metric">
+                <div class="card-metric-value purple" data-animate="~50%">0%</div>
+              </div>
             </div>
-            <div style="margin-top:12px">Gen Z spends ~50% of income on experiences (dining, travel); position Coke as the accessory for those moments.</div>
-            <div style="margin-top:12px">
-              <svg viewBox="0 0 600 140" width="100%" height="140" preserveAspectRatio="none" style="margin-top:12px">
+            <p class="card-body">Gen Z prioritizes experiences over saving. Approximately 50% of income goes to dining, travel, and entertainment.</p>
+            <div class="card-chart">
+              <div class="bar-chart">
+                <div class="bar-item">
+                  <span class="bar-label">Dining</span>
+                  <div class="bar-track"><div class="bar-fill purple" style="width: 72%"></div></div>
+                  <span class="bar-value">72%</span>
+                </div>
+                <div class="bar-item">
+                  <span class="bar-label">Travel</span>
+                  <div class="bar-track"><div class="bar-fill purple" style="width: 58%"></div></div>
+                  <span class="bar-value">58%</span>
+                </div>
+                <div class="bar-item">
+                  <span class="bar-label">Fashion</span>
+                  <div class="bar-track"><div class="bar-fill purple" style="width: 45%"></div></div>
+                  <span class="bar-value">45%</span>
+                </div>
+              </div>
+            </div>
+            <div class="card-action">
+              <div class="card-action-label">Strategic Action</div>
+              <div class="card-action-text">Position Coke as the essential accessory to the experience economy.</div>
+            </div>
+            <div class="card-tags">
+              <span class="tag">Gen Z</span>
+              <span class="tag">Spending</span>
+              <span class="tag">Experience</span>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">🧠</div>
+              <div class="card-title-group">
+                <h3 class="card-title">Shared 'Brainrot' Language</h3>
+                <p class="card-subtitle">Cultural Codes</p>
+              </div>
+              <div class="card-metric">
+                <div class="card-metric-value green" data-animate="High">—</div>
+              </div>
+            </div>
+            <p class="card-body">'Brainrot' formats spread rapidly and are intentionally obscure. Brands must be agile and avoid forced mimicry of in-group slang.</p>
+            <div class="card-chart">
+              <div class="donut-chart">
+                <svg class="donut-visual" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="#F3F4F6" stroke-width="12"/>
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="#71717A" stroke-width="12" stroke-dasharray="175 251" stroke-dashoffset="0" transform="rotate(-90 50 50)"/>
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="#000000" stroke-width="12" stroke-dasharray="50 251" stroke-dashoffset="-175" transform="rotate(-90 50 50)"/>
+                </svg>
+                <div class="donut-legend">
+                  <div class="donut-legend-item">
+                    <div class="donut-legend-dot" style="background: #5B2C6F"></div>
+                    <span class="donut-legend-label">Organic spread</span>
+                    <span class="donut-legend-value">70%</span>
+                  </div>
+                  <div class="donut-legend-item">
+                    <div class="donut-legend-dot" style="background: #E51B17"></div>
+                    <span class="donut-legend-label">Brand attempts</span>
+                    <span class="donut-legend-value">20%</span>
+                  </div>
+                  <div class="donut-legend-item">
+                    <div class="donut-legend-dot" style="background: #F3F4F6"></div>
+                    <span class="donut-legend-label">Mainstream</span>
+                    <span class="donut-legend-value">10%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-action">
+              <div class="card-action-label">Strategic Action</div>
+              <div class="card-action-text">Use visual absurdist humor rather than attempting to replicate in-group slang.</div>
+            </div>
+            <div class="card-tags">
+              <span class="tag">Brainrot</span>
+              <span class="tag">Slang</span>
+              <span class="tag">Cultural Code</span>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">⏱️</div>
+              <div class="card-title-group">
+                <h3 class="card-title">Reels for Notes</h3>
+                <p class="card-subtitle">The Death of Deep Focus</p>
+              </div>
+              <div class="card-metric">
+                <div class="card-metric-value orange" data-animate="9-12h">—</div>
+              </div>
+            </div>
+            <p class="card-body">Younger Gen Z screen time is 9-12 hours daily. Micro-content dominates attention spans. Short-form video transforms learning behaviors.</p>
+            <div class="card-chart">
+              <svg class="area-chart" viewBox="0 0 400 120" preserveAspectRatio="none">
                 <defs>
-                  <linearGradient id="g2" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stop-color="rgba(91,44,111,0.12)"/>
-                    <stop offset="100%" stop-color="rgba(91,44,111,0)"/>
+                  <linearGradient id="grad2" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="rgba(245,158,11,0.15)"/>
+                    <stop offset="100%" stop-color="rgba(245,158,11,0)"/>
                   </linearGradient>
                 </defs>
-                <path d="M0,110 C100,90 200,80 300,95 C400,110 500,100 600,98 L600,140 L0,140 Z" fill="url(#g2)"/>
-                <path d="M0,110 C100,90 200,80 300,95 C400,110 500,100 600,98" fill="none" stroke="var(--consuma-purple)" stroke-width="2.5" stroke-linecap="round"/>
-                <text x="70" y="128" fill="#6b7280" font-family:'Roboto Mono' font-size="12">Eating Out</text>
-                <text x="320" y="128" fill="#6b7280" font-family:'Roboto Mono' font-size="12">Sneakers</text>
-                <text x="520" y="128" fill="#6b7280" font-family:'Roboto Mono' font-size="12">Travel</text>
+                <path d="M0,90 C80,85 120,50 200,45 C280,40 320,55 400,50 L400,120 L0,120 Z" fill="url(#grad2)"/>
+                <path d="M0,90 C80,85 120,50 200,45 C280,40 320,55 400,50" fill="none" stroke="#A1A1AA" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="200" cy="45" r="4" fill="#71717A"/>
               </svg>
             </div>
-            <div style="margin-top:12px;padding:12px;border-left:4px solid var(--coke-red);background:#fff;border-radius:6px">
-              <strong>Strategic action:</strong> Position Coke as the essential accessory to the experience economy.
+            <div class="card-action">
+              <div class="card-action-label">Strategic Action</div>
+              <div class="card-action-text">Micro-dose messaging — keep brand messages under 7 seconds to land effectively.</div>
             </div>
-            <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
-              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Gen Z</span>
-              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Spending</span>
-              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Experience</span>
+            <div class="card-tags">
+              <span class="tag">Attention</span>
+              <span class="tag">Reels</span>
+              <span class="tag">Micro-content</span>
             </div>
           </div>
+        </div>
+      </section>
 
-          <!-- Insight 03 -->
+      <!-- Brands Section -->
+      <section id="brands" class="section">
+        <div class="section-header">
+          <h1 class="section-title">Brands</h1>
+          <p class="section-subtitle">Coke brands vs competitors, market positioning</p>
+        </div>
+        
+        <div class="cards-grid">
           <div class="card">
-            <div style="display:flex;gap:12px;align-items:center">
-              <div style="width:54px;height:54px;background:#fff;border-radius:8px;border:1px solid #f0f2f5;display:flex;align-items:center;justify-content:center;font-size:22px">🧠</div>
-              <div style="flex:1">
-                <div style="font-weight:800;font-size:18px">The Shared 'Brainrot' Language Barrier</div>
-                <div style="color:var(--muted);margin-top:6px">Niche slang and formats create in-group cultural codes.</div>
+            <div class="card-header">
+              <div class="card-icon">📊</div>
+              <div class="card-title-group">
+                <h3 class="card-title">Share of Voice</h3>
+                <p class="card-subtitle">Brand Conversation Analysis</p>
               </div>
-              <div style="text-align:right;color:#0ea5a4;font-weight:800">High</div>
-            </div>
-            <div style="margin-top:12px">'Brainrot' formats spread rapidly and are intentionally obscure; brands must be agile and avoid forced mimicry.</div>
-            <div style="margin-top:12px;padding:12px;border-left:4px solid var(--consuma-purple);background:#fff;border-radius:6px">
-              <strong>Strategic action:</strong> Use visual absurdist humor rather than attempting to replicate in-group slang.
-            </div>
-            <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
-              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Brainrot</span>
-              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Slang</span>
-              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Cultural Code</span>
-            </div>
-          </div>
-
-          <!-- Insight 04 -->
-          <div class="card">
-            <div style="display:flex;gap:12px;align-items:center">
-              <div style="width:54px;height:54px;background:#fff;border-radius:8px;border:1px solid #f0f2f5;display:flex;align-items:center;justify-content:center;font-size:22px">⏱️</div>
-              <div style="flex:1">
-                <div style="font-weight:800;font-size:18px">'Reels for Notes' (The Death of Deep Focus)</div>
-                <div style="color:var(--muted);margin-top:6px">Short-form video transforms attention and learning behaviors.</div>
+              <div class="card-metric">
+                <div class="card-metric-value red" data-animate="58%">0%</div>
               </div>
-              <div style="text-align:right;color:#ef4444;font-weight:800">9-12h</div>
             </div>
-            <div style="margin-top:12px">Younger Gen Z screen time is 9–12 hours daily; micro-content dominates attention.</div>
-            <div style="margin-top:12px;padding:12px;border-left:4px solid var(--coke-red);background:#fff;border-radius:6px">
-              <strong>Strategic action:</strong> Micro-dose messaging — keep brand messages under 7 seconds to land.
-            </div>
-            <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
-              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Attention</span>
-              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Reels</span>
-              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Micro-content</span>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- Brands (may be locked/preview depending on schedule) -->
-      <section id="brands" class="sphere-section">
-        <div class="content-inner">
-          <h2 class="panel-title">Brands</h2>
-          <p class="panel-sub">Coke Brands vs X, Comparisons</p>
-          <div class="card">
-            <h4 style="margin:0 0 8px">Share of voice</h4>
-            <div class="bar-track"><div class="bar-fill" style="width:58%"></div></div>
-            <div style="display:flex;gap:6px;margin-top:8px"><div style="flex:1;color:var(--muted)">Coke 58%</div><div style="flex:1;color:var(--muted)">Pepsi 32%</div></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Marketing -->
-      <section id="marketing" class="sphere-section">
-        <div class="content-inner">
-          <h2 class="panel-title">Marketing Inspiration</h2>
-          <p class="panel-sub">Activations, Ads, Campaigns</p>
-          <div class="card">
-            <div class="insight-item"><div class="insight-num">1</div><div>Short-form UGC outperforms brand-led by 3.2x</div></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- F&B -->
-      <section id="fnb" class="sphere-section">
-        <div class="content-inner">
-          <h2 class="panel-title">F&B</h2>
-          <p class="panel-sub">Food, Beverages, Cuisine</p>
-          <div class="card">
-            <div class="insight-item"><div class="insight-num">1</div><div>Pizza, burgers, snacks top pairings</div></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Coming-soon sections: content will be replaced by JS to show title/sub only -->
-      <section id="events" class="sphere-section">
-        <div class="content-inner">
-          <h2 class="panel-title">Events</h2>
-          <p class="panel-sub">Social, Entertainment, Celebs</p>
-          <div class="card">
-            <div style="display:flex;justify-content:space-between;align-items:center">
-              <div>
-                <div style="font-weight:800;font-size:18px">Event spikes & activations</div>
-                <div style="color:var(--muted);margin-top:6px">Live moments, celebrity mentions and festival activations</div>
-              </div>
-              <div style="text-align:right;color:var(--coke-red);font-weight:800">+72%</div>
-            </div>
-            <div style="margin-top:12px" class="charts">
-              <div>
-                <div style="height:72px;display:flex;align-items:end;gap:8px">
-                  <div style="flex:1;height:36%;background:#f97316;border-radius:6px"></div>
-                  <div style="flex:1;height:48%;background:#fb7185;border-radius:6px"></div>
-                  <div style="flex:1;height:28%;background:#f59e0b;border-radius:6px"></div>
-                  <div style="flex:1;height:62%;background:#ef4444;border-radius:6px"></div>
+            <p class="card-body">Coca-Cola leads share of voice in the carbonated beverages category, maintaining strong presence across social platforms.</p>
+            <div class="card-chart">
+              <div class="bar-chart">
+                <div class="bar-item">
+                  <span class="bar-label">Coca-Cola</span>
+                  <div class="bar-track"><div class="bar-fill red" style="width: 58%"></div></div>
+                  <span class="bar-value">58%</span>
                 </div>
-              </div>
-              <div>
-                <div style="font-size:13px;color:var(--muted)">Top mentions</div>
-                <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
-                  <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Super Bowl</span>
-                  <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Music Festivals</span>
+                <div class="bar-item">
+                  <span class="bar-label">Pepsi</span>
+                  <div class="bar-track"><div class="bar-fill gray" style="width: 32%"></div></div>
+                  <span class="bar-value">32%</span>
+                </div>
+                <div class="bar-item">
+                  <span class="bar-label">Others</span>
+                  <div class="bar-track"><div class="bar-fill gray" style="width: 10%"></div></div>
+                  <span class="bar-value">10%</span>
                 </div>
               </div>
             </div>
+            <div class="card-tags">
+              <span class="tag">SOV</span>
+              <span class="tag">Competition</span>
+              <span class="tag">Social</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">💬</div>
+              <div class="card-title-group">
+                <h3 class="card-title">Sentiment Analysis</h3>
+                <p class="card-subtitle">Brand Perception</p>
+              </div>
+              <div class="card-metric">
+                <div class="card-metric-value green" data-animate="+24%">0%</div>
+              </div>
+            </div>
+            <p class="card-body">Net sentiment improved 24% YoY driven by nostalgia campaigns and limited edition product launches.</p>
+            <div class="card-chart">
+              <svg class="area-chart" viewBox="0 0 400 120" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="grad3" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="rgba(16,185,129,0.15)"/>
+                    <stop offset="100%" stop-color="rgba(16,185,129,0)"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,70 C50,65 100,60 150,55 C200,50 250,45 300,40 C350,35 380,30 400,28 L400,120 L0,120 Z" fill="url(#grad3)"/>
+                <path d="M0,70 C50,65 100,60 150,55 C200,50 250,45 300,40 C350,35 380,30 400,28" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="card-tags">
+              <span class="tag">Sentiment</span>
+              <span class="tag">Perception</span>
+              <span class="tag">Growth</span>
+            </div>
           </div>
         </div>
       </section>
 
-      <section id="media" class="sphere-section">
-        <div class="content-inner">
-          <h2 class="panel-title">Media</h2>
-          <p class="panel-sub">Landscape, Genres, Preferences</p>
+      <!-- Marketing Section -->
+      <section id="marketing" class="section">
+        <div class="section-header">
+          <h1 class="section-title">Marketing Inspiration</h1>
+          <p class="section-subtitle">Activations, campaigns, and creative insights</p>
+        </div>
+        
+        <div class="cards-grid">
           <div class="card">
-            <div style="display:flex;justify-content:space-between;align-items:center">
-              <div>
-                <div style="font-weight:800;font-size:18px">Platform distribution</div>
-                <div style="color:var(--muted);margin-top:6px">Where conversations are happening</div>
+            <div class="card-header">
+              <div class="card-icon">🎬</div>
+              <div class="card-title-group">
+                <h3 class="card-title">UGC Performance</h3>
+                <p class="card-subtitle">Content Strategy</p>
               </div>
-              <div style="text-align:right;color:var(--consuma-purple);font-weight:800">TikTok 38%</div>
+              <div class="card-metric">
+                <div class="card-metric-value purple" data-animate="3.2x">0x</div>
+              </div>
             </div>
-            <div style="margin-top:12px">
-              <div class="bar-track"><div class="bar-fill" style="width:38%"></div></div>
-              <div style="display:flex;gap:8px;margin-top:8px">
-                <div style="flex:1;color:var(--muted)">TikTok</div>
-                <div style="flex:1;color:var(--muted)">Instagram</div>
-                <div style="flex:1;color:var(--muted)">X</div>
-                <div style="flex:1;color:var(--muted)">YouTube</div>
+            <p class="card-body">Short-form UGC outperforms brand-led content by 3.2x in engagement metrics. Authenticity drives conversion.</p>
+            <div class="card-chart">
+              <div class="bar-chart">
+                <div class="bar-item">
+                  <span class="bar-label">UGC</span>
+                  <div class="bar-track"><div class="bar-fill purple" style="width: 85%"></div></div>
+                  <span class="bar-value">3.2x</span>
+                </div>
+                <div class="bar-item">
+                  <span class="bar-label">Brand-led</span>
+                  <div class="bar-track"><div class="bar-fill gray" style="width: 27%"></div></div>
+                  <span class="bar-value">1.0x</span>
+                </div>
               </div>
+            </div>
+            <div class="card-action">
+              <div class="card-action-label">Strategic Action</div>
+              <div class="card-action-text">Invest in creator partnerships and UGC amplification programs.</div>
+            </div>
+            <div class="card-tags">
+              <span class="tag">UGC</span>
+              <span class="tag">Creators</span>
+              <span class="tag">Engagement</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">🎯</div>
+              <div class="card-title-group">
+                <h3 class="card-title">Platform Performance</h3>
+                <p class="card-subtitle">Channel Effectiveness</p>
+              </div>
+              <div class="card-metric">
+                <div class="card-metric-value red" data-animate="TikTok">—</div>
+              </div>
+            </div>
+            <p class="card-body">TikTok leads ROI for beverage campaigns with highest conversion rates among Gen Z audience segments.</p>
+            <div class="card-chart">
+              <div class="donut-chart">
+                <svg class="donut-visual" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="#F3F4F6" stroke-width="12"/>
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="#000000" stroke-width="12" stroke-dasharray="100 251" stroke-dashoffset="0" transform="rotate(-90 50 50)"/>
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="#71717A" stroke-width="12" stroke-dasharray="75 251" stroke-dashoffset="-100" transform="rotate(-90 50 50)"/>
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="#D4D4D8" stroke-width="12" stroke-dasharray="50 251" stroke-dashoffset="-175" transform="rotate(-90 50 50)"/>
+                </svg>
+                <div class="donut-legend">
+                  <div class="donut-legend-item">
+                    <div class="donut-legend-dot" style="background: #E51B17"></div>
+                    <span class="donut-legend-label">TikTok</span>
+                    <span class="donut-legend-value">40%</span>
+                  </div>
+                  <div class="donut-legend-item">
+                    <div class="donut-legend-dot" style="background: #5B2C6F"></div>
+                    <span class="donut-legend-label">Instagram</span>
+                    <span class="donut-legend-value">30%</span>
+                  </div>
+                  <div class="donut-legend-item">
+                    <div class="donut-legend-dot" style="background: #6B7280"></div>
+                    <span class="donut-legend-label">YouTube</span>
+                    <span class="donut-legend-value">20%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-tags">
+              <span class="tag">TikTok</span>
+              <span class="tag">ROI</span>
+              <span class="tag">Gen Z</span>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="social-trends" class="sphere-section">
-        <div class="content-inner">
-          <h2 class="panel-title">Social Trends</h2>
-          <p class="panel-sub">Brainrot, Memes, References</p>
+      <!-- F&B Section -->
+      <section id="fnb" class="section">
+        <div class="section-header">
+          <h1 class="section-title">F&B</h1>
+          <p class="section-subtitle">Food, beverages, and emerging consumption rituals</p>
+        </div>
+        
+        <div class="cards-grid">
+          <!-- Insight 1: The Scoville Sensory Reset -->
           <div class="card">
-            <div style="display:flex;gap:12px;align-items:center">
-              <div style="flex:1">
-                <div style="font-weight:800">Meme cycles & formats</div>
-                <div style="color:var(--muted);margin-top:6px">Rapid format recycling; short-form humor dominates</div>
+            <div class="card-header">
+              <div class="card-icon heat-shimmer">🌶️</div>
+              <div class="card-title-group">
+                <h3 class="card-title">The Scoville Sensory Reset</h3>
+                <p class="card-subtitle">The "Swicy" Snap-Out</p>
               </div>
-              <div style="font-weight:700;color:#0ea5a4">Viral</div>
+              <div class="card-metric">
+                <div class="card-metric-value red">🔥→❄️</div>
+              </div>
             </div>
-            <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
-              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Brainrot</span>
-              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Memes</span>
-              <span style="background:#fff;border:1px solid #f0f2f5;padding:6px;border-radius:6px">Nostalgia</span>
+            <p class="card-body">Gen Z pairs hyper-spicy snacks with ice-cold Coke as a <strong>"sensory jolt"</strong> — a physical reset from doom-scrolling. Heat + carbonated coolant = snap back to reality.</p>
+            
+            <div class="heat-cool-viz">
+              <div class="heat-icon">🌶️</div>
+              <div style="display: flex; flex-direction: column; align-items: center;">
+                <span style="font-size: 12px; color: var(--muted); margin-bottom: 4px;">BURN</span>
+                <div style="width: 80px; height: 8px; background: linear-gradient(90deg, #EF4444, #F97316); border-radius: 4px;"></div>
+              </div>
+              <div class="flow-arrow">→</div>
+              <div style="display: flex; flex-direction: column; align-items: center;">
+                <span style="font-size: 12px; color: var(--muted); margin-bottom: 4px;">RESET</span>
+                <div style="width: 80px; height: 8px; background: linear-gradient(90deg, #E51B17, #991B1B); border-radius: 4px;"></div>
+              </div>
+              <div class="cool-icon">🥤</div>
+            </div>
+            
+            <div class="card-action">
+              <div class="card-action-label">Next Step</div>
+              <div class="card-action-text">Position Coke as <strong>"The Great Reset"</strong> — the essential coolant to the burn of modern life.</div>
+            </div>
+            <div class="card-tags">
+              <span class="tag">Spicy</span>
+              <span class="tag">Sensory</span>
+              <span class="tag">Gen Z</span>
+            </div>
+          </div>
+
+          <!-- Insight 2: The "Ugly" Rebellion -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">🍜</div>
+              <div class="card-title-group">
+                <h3 class="card-title">The "Ugly" Rebellion</h3>
+                <p class="card-subtitle">Chaos Comfort</p>
+              </div>
+              <div class="card-metric">
+                <div class="card-metric-value purple" data-animate="Messy">—</div>
+              </div>
+            </div>
+            <p class="card-body">Rising trend: "ugly" but delicious combos — chips in sandwiches, namkeen in noodles. <strong>Chaos Comfort</strong> during binge-watching. Dopamine > aesthetics.</p>
+            
+            <div class="chaos-viz">
+              <div class="chaos-item">🍞</div>
+              <div class="chaos-item">➕</div>
+              <div class="chaos-item">🥔</div>
+              <div class="chaos-item">😋</div>
+              <div class="chaos-item">🍜</div>
+              <div class="chaos-item">➕</div>
+              <div class="chaos-item">🥨</div>
+              <div class="chaos-item">🤤</div>
+            </div>
+            
+            <div class="card-action">
+              <div class="card-action-label">Next Step</div>
+              <div class="card-action-text">Ditch perfect food shots. Show Coke in <strong>messy reality</strong> — chaotic table, 10/10 vibes.</div>
+            </div>
+            <div class="card-tags">
+              <span class="tag">Anti-Aesthetic</span>
+              <span class="tag">Me-Time</span>
+              <span class="tag">Comfort</span>
+            </div>
+          </div>
+
+          <!-- Insight 3: "Swangy" as the New Sophistication -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">🫐</div>
+              <div class="card-title-group">
+                <h3 class="card-title">"Swangy" Sophistication</h3>
+                <p class="card-subtitle">Sweet-Tangy-Spicy</p>
+              </div>
+              <div class="card-metric">
+                <div class="card-metric-value green" data-animate="Adult">—</div>
+              </div>
+            </div>
+            <p class="card-body">Gen Z is rejecting "sweet" as childish. <strong>"Swangy"</strong> (sweet + tangy + spicy) like Jamun or Amla signals sophistication. Complex palate for a complex generation.</p>
+            
+            <div class="flavor-bars">
+              <div class="flavor-bar" style="height: 30%; background: #FCD34D;" title="Sweet"></div>
+              <div class="flavor-bar" style="height: 85%; background: #10B981;" title="Tangy"></div>
+              <div class="flavor-bar" style="height: 70%; background: #F97316;" title="Spicy"></div>
+              <div class="flavor-bar" style="height: 25%; background: #FCD34D;" title="Sweet"></div>
+              <div class="flavor-bar" style="height: 90%; background: #10B981;" title="Tangy"></div>
+              <div class="flavor-bar" style="height: 60%; background: #F97316;" title="Spicy"></div>
+              <div class="flavor-bar" style="height: 35%; background: #FCD34D;" title="Sweet"></div>
+              <div class="flavor-bar" style="height: 80%; background: #10B981;" title="Tangy"></div>
+            </div>
+            <div style="display: flex; justify-content: space-around; margin-bottom: var(--space-4); font-size: 11px; color: var(--muted);">
+              <span>🍬 Sweet ↓</span>
+              <span>🍋 Tangy ↑</span>
+              <span>🌶️ Spicy ↑</span>
+            </div>
+            
+            <div class="card-action">
+              <div class="card-action-label">Next Step</div>
+              <div class="card-action-text">Introduce <strong>"Swangy" mixers</strong> or limited editions — let Gen Z "adultify" their Coke.</div>
+            </div>
+            <div class="card-tags">
+              <span class="tag">Flavor</span>
+              <span class="tag">Tangy</span>
+              <span class="tag">Premium</span>
+            </div>
+          </div>
+
+          <!-- Insight 4: The "Liquid Focus Fuel" Anchor -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">🎯</div>
+              <div class="card-title-group">
+                <h3 class="card-title">Liquid Focus Fuel</h3>
+                <p class="card-subtitle">The Productivity Anchor</p>
+              </div>
+              <div class="card-metric">
+                <div class="card-metric-value red" data-animate="Trigger">—</div>
+              </div>
+            </div>
+            <p class="card-body">A cold drink on the desk = psychological <strong>"on-switch"</strong> for deep work. The physical act signals "work mode" — a sensory boundary in a distracted world.</p>
+            
+            <div class="focus-viz">
+              <div class="focus-stages">
+                <div class="focus-stage">
+                  <div class="focus-stage-icon">😴</div>
+                  <div class="focus-stage-label">Distracted</div>
+                </div>
+                <div class="focus-connector">→</div>
+                <div class="focus-stage">
+                  <div class="focus-stage-icon pulse">🥤</div>
+                  <div class="focus-stage-label">Trigger</div>
+                </div>
+                <div class="focus-connector">→</div>
+                <div class="focus-stage">
+                  <div class="focus-stage-icon">🔥</div>
+                  <div class="focus-stage-label">Deep Work</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card-action">
+              <div class="card-action-label">Next Step</div>
+              <div class="card-action-text">Position Coke as <strong>"Focus Fuel"</strong> — not just for parties, but for the grind.</div>
+            </div>
+            <div class="card-tags">
+              <span class="tag">Focus</span>
+              <span class="tag">Productivity</span>
+              <span class="tag">Ritual</span>
             </div>
           </div>
         </div>
       </section>
-      <!-- competitive removed per updated tab list -->
-    </main>
-  </div>
-  <footer style="text-align:center;padding:18px 0;color:var(--muted);font-weight:600">Insights Powered by Consuma</footer>
+
+      <!-- Events Section -->
+      <section id="events" class="section">
+        <div class="section-header">
+          <h1 class="section-title">Events</h1>
+          <p class="section-subtitle">Social, entertainment, and celebrity moments</p>
+        </div>
+        
+        <div class="cards-grid">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">🎤</div>
+              <div class="card-title-group">
+                <h3 class="card-title">Live Event Spikes</h3>
+                <p class="card-subtitle">Moment Marketing</p>
+              </div>
+              <div class="card-metric">
+                <div class="card-metric-value red" data-animate="+72%">0%</div>
+              </div>
+            </div>
+            <p class="card-body">Brand mentions spike 72% during live entertainment events. Festival activations and sports moments drive highest engagement rates.</p>
+            <div class="card-chart">
+              <svg class="area-chart" viewBox="0 0 400 120" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="gradEvents" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="rgba(229,27,23,0.15)"/>
+                    <stop offset="100%" stop-color="rgba(229,27,23,0)"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,80 C40,75 60,70 100,40 C120,25 140,30 160,65 C200,75 240,70 280,35 C320,20 360,45 400,50 L400,120 L0,120 Z" fill="url(#gradEvents)"/>
+                <path d="M0,80 C40,75 60,70 100,40 C120,25 140,30 160,65 C200,75 240,70 280,35 C320,20 360,45 400,50" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="100" cy="40" r="4" fill="#000000"/>
+                <circle cx="280" cy="35" r="4" fill="#000000"/>
+              </svg>
+            </div>
+            <div class="card-tags">
+              <span class="tag">Live Events</span>
+              <span class="tag">Festivals</span>
+              <span class="tag">Sports</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">🏆</div>
+              <div class="card-title-group">
+                <h3 class="card-title">Top Event Categories</h3>
+                <p class="card-subtitle">Engagement Drivers</p>
+              </div>
+              <div class="card-metric">
+                <div class="card-metric-value purple" data-animate="Cricket">—</div>
+              </div>
+            </div>
+            <p class="card-body">Cricket matches and music festivals dominate event-driven brand conversations for beverages.</p>
+            <div class="card-chart">
+              <div class="bar-chart">
+                <div class="bar-item">
+                  <span class="bar-label">Cricket</span>
+                  <div class="bar-track"><div class="bar-fill purple" style="width: 82%"></div></div>
+                  <span class="bar-value">82%</span>
+                </div>
+                <div class="bar-item">
+                  <span class="bar-label">Music</span>
+                  <div class="bar-track"><div class="bar-fill purple" style="width: 68%"></div></div>
+                  <span class="bar-value">68%</span>
+                </div>
+                <div class="bar-item">
+                  <span class="bar-label">Movies</span>
+                  <div class="bar-track"><div class="bar-fill gray" style="width: 45%"></div></div>
+                  <span class="bar-value">45%</span>
+                </div>
+              </div>
+            </div>
+            <div class="card-tags">
+              <span class="tag">Sports</span>
+              <span class="tag">Music</span>
+              <span class="tag">Activation</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Media Section -->
+      <section id="media" class="section">
+        <div class="section-header">
+          <h1 class="section-title">Media</h1>
+          <p class="section-subtitle">Consumption patterns, formats, and the evolving media landscape</p>
+        </div>
+        
+        <div class="cards-grid">
+          <!-- Insight 1: The Efficiency Paradox -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">⚡</div>
+              <div class="card-title-group">
+                <h3 class="card-title">The Efficiency Paradox</h3>
+                <p class="card-subtitle">Speed Consumption Culture</p>
+              </div>
+              <div class="card-metric">
+                <div class="card-metric-value red" data-animate="2x">0x</div>
+              </div>
+            </div>
+            <p class="card-body">Gen Z is increasingly consuming content at 1.5x or 2x speed — even for movies, TV shows, and reels. It's not just about saving time; it's about <strong>"Information Density."</strong> They have trained their brains to process visual and audio data faster. Anything at "normal" speed feels laggy or boring.</p>
+            
+            <div class="card-chart">
+              <div class="bar-chart">
+                <div class="bar-item">
+                  <span class="bar-label">2x Speed</span>
+                  <div class="bar-track"><div class="bar-fill red" style="width: 42%"></div></div>
+                  <span class="bar-value">42%</span>
+                </div>
+                <div class="bar-item">
+                  <span class="bar-label">1.5x Speed</span>
+                  <div class="bar-track"><div class="bar-fill red" style="width: 31%"></div></div>
+                  <span class="bar-value">31%</span>
+                </div>
+                <div class="bar-item">
+                  <span class="bar-label">Normal</span>
+                  <div class="bar-track"><div class="bar-fill gray" style="width: 27%"></div></div>
+                  <span class="bar-value">27%</span>
+                </div>
+              </div>
+            </div>
+            
+            <div style="background: var(--border-light); padding: var(--space-4); border-radius: var(--radius); margin-bottom: var(--space-4);">
+              <div style="font-size: var(--text-xs); font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-2);">Key Insight</div>
+              <div style="font-size: var(--text-base); color: var(--text);">The "hook" of a video isn't just the first 3 seconds anymore — it's the <strong>tempo of the entire piece</strong>. If the rhythm is slow, they skip or speed it up, losing the emotional nuance.</div>
+            </div>
+            
+            <div class="card-action">
+              <div class="card-action-label">Strategic Action</div>
+              <div class="card-action-text">Design content with faster pacing and higher information density. Front-load key messages and maintain visual rhythm throughout.</div>
+            </div>
+            <div class="card-tags">
+              <span class="tag">Gen Z</span>
+              <span class="tag">Speed</span>
+              <span class="tag">Attention</span>
+              <span class="tag">Pacing</span>
+            </div>
+          </div>
+
+          <!-- Insight 2: The Silent Revolution -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">🔇</div>
+              <div class="card-title-group">
+                <h3 class="card-title">The Silent Revolution</h3>
+                <p class="card-subtitle">Subtitles-First Culture</p>
+              </div>
+              <div class="card-metric">
+                <div class="card-metric-value purple" data-animate="85%">0%</div>
+              </div>
+            </div>
+            <p class="card-body"><strong>"Mute" is the new default.</strong> 85% of social video is watched without sound, leading to a "Subtitles-First" culture. Consumption happens in "stolen moments" — on the metro, in a boring meeting, or in a shared bedroom. Sound is a "barrier to entry" for a quick scroll.</p>
+            
+            <div class="card-chart">
+              <div class="donut-chart">
+                <svg class="donut-visual" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="#F3F4F6" stroke-width="12"/>
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="#71717A" stroke-width="12" stroke-dasharray="213 251" stroke-dashoffset="0" transform="rotate(-90 50 50)"/>
+                </svg>
+                <div class="donut-legend">
+                  <div class="donut-legend-item">
+                    <div class="donut-legend-dot" style="background: #5B2C6F"></div>
+                    <span class="donut-legend-label">Muted viewing</span>
+                    <span class="donut-legend-value">85%</span>
+                  </div>
+                  <div class="donut-legend-item">
+                    <div class="donut-legend-dot" style="background: #F3F4F6"></div>
+                    <span class="donut-legend-label">Sound on</span>
+                    <span class="donut-legend-value">15%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div style="background: linear-gradient(135deg, rgba(229,27,23,0.08), rgba(91,44,111,0.08)); padding: var(--space-4); border-radius: var(--radius); margin-bottom: var(--space-4); border: 1px solid var(--border);">
+              <div style="font-size: var(--text-xs); font-weight: 600; color: var(--coke-red); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-2);">Critical Implication</div>
+              <div style="font-size: var(--text-base); color: var(--text);">Visual storytelling must be entirely self-contained. If the "punchline" or the brand message relies on a sound effect or a voiceover, <strong>it effectively doesn't exist for 85% of the audience.</strong></div>
+            </div>
+            
+            <div class="card-action">
+              <div class="card-action-label">Strategic Action</div>
+              <div class="card-action-text">Design all video content to work without sound. Use bold captions, visual storytelling, and text overlays to convey the message.</div>
+            </div>
+            <div class="card-tags">
+              <span class="tag">Silent</span>
+              <span class="tag">Subtitles</span>
+              <span class="tag">Visual-First</span>
+              <span class="tag">Mobile</span>
+            </div>
+          </div>
+
+          <!-- Insight 3: Vibe Celebrity vs Craft Star -->
+          <div class="card" style="grid-column: 1 / -1;">
+            <div class="card-header">
+              <div class="card-icon">⭐</div>
+              <div class="card-title-group">
+                <h3 class="card-title">The "Vibe" Celebrity vs. The "Craft" Star</h3>
+                <p class="card-subtitle">The New Fame Equation</p>
+              </div>
+              <div class="card-metric">
+                <div class="card-metric-value green" data-animate="Access">—</div>
+              </div>
+            </div>
+            <p class="card-body">Traditional "Mega-stars" are being replaced by <strong>"Vibe-Celebrities"</strong> like Orry or Rohit Saraf, who are famous for their accessibility and personality rather than just acting. Gen Z values <strong>"Access" over "Aura."</strong> They want celebrities they can imagine being friends with, not distant icons on a pedestal.</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-4); margin: var(--space-4) 0;">
+              <!-- Traditional Stars -->
+              <div style="background: var(--border-light); padding: var(--space-4); border-radius: var(--radius);">
+                <div style="font-size: var(--text-xs); font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-3);">Traditional "Craft" Stars</div>
+                <div class="bar-chart">
+                  <div class="bar-item">
+                    <span class="bar-label" style="width: 100px;">Aura</span>
+                    <div class="bar-track"><div class="bar-fill gray" style="width: 90%"></div></div>
+                  </div>
+                  <div class="bar-item">
+                    <span class="bar-label" style="width: 100px;">Distance</span>
+                    <div class="bar-track"><div class="bar-fill gray" style="width: 85%"></div></div>
+                  </div>
+                  <div class="bar-item">
+                    <span class="bar-label" style="width: 100px;">Accessibility</span>
+                    <div class="bar-track"><div class="bar-fill gray" style="width: 25%"></div></div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Vibe Celebrities -->
+              <div style="background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(91,44,111,0.08)); padding: var(--space-4); border-radius: var(--radius); border: 1px solid var(--border);">
+                <div style="font-size: var(--text-xs); font-weight: 600; color: var(--success); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-3);">"Vibe" Celebrities ✓</div>
+                <div class="bar-chart">
+                  <div class="bar-item">
+                    <span class="bar-label" style="width: 100px;">Relatability</span>
+                    <div class="bar-track"><div class="bar-fill green" style="width: 92%"></div></div>
+                  </div>
+                  <div class="bar-item">
+                    <span class="bar-label" style="width: 100px;">Engagement</span>
+                    <div class="bar-track"><div class="bar-fill green" style="width: 88%"></div></div>
+                  </div>
+                  <div class="bar-item">
+                    <span class="bar-label" style="width: 100px;">Accessibility</span>
+                    <div class="bar-track"><div class="bar-fill green" style="width: 95%"></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div style="background: var(--card); border: 2px solid var(--success); padding: var(--space-4); border-radius: var(--radius); margin-bottom: var(--space-4);">
+              <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2);">
+                <span style="font-size: 18px;">💡</span>
+                <div style="font-size: var(--text-sm); font-weight: 600; color: var(--success); text-transform: uppercase; letter-spacing: 0.05em;">The New Paradigm</div>
+              </div>
+              <div style="font-size: var(--text-base); color: var(--text);">Brand ambassadors shouldn't just be "faces" — they should be <strong>"access points."</strong> Use celebrities who are active in DMs and comments, creating a sense of a two-way relationship with the brand.</div>
+            </div>
+            
+            <div class="card-action">
+              <div class="card-action-label">Strategic Action</div>
+              <div class="card-action-text">Partner with accessible, personality-driven celebrities who engage directly with audiences. Prioritize DM responsiveness and comment interaction in ambassador contracts.</div>
+            </div>
+            <div class="card-tags">
+              <span class="tag">Celebrity</span>
+              <span class="tag">Influencer</span>
+              <span class="tag">Access</span>
+              <span class="tag">Relatability</span>
+              <span class="tag">Gen Z</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Social Trends Section -->
+      <section id="social" class="section">
+        <div class="section-header">
+          <h1 class="section-title">Social Trends</h1>
+          <p class="section-subtitle">Brainrot, memes, and viral references</p>
+        </div>
+        
+        <div class="cards-grid">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">🧠</div>
+              <div class="card-title-group">
+                <h3 class="card-title">Meme Cycle Velocity</h3>
+                <p class="card-subtitle">Format Lifespan</p>
+              </div>
+              <div class="card-metric">
+                <div class="card-metric-value orange" data-animate="48h">0h</div>
+              </div>
+            </div>
+            <p class="card-body">Average meme format lifespan has shrunk to 48 hours. Brands have a narrow window to participate authentically before formats become stale.</p>
+            <div class="card-chart">
+              <svg class="area-chart" viewBox="0 0 400 120" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="gradSocial" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="rgba(245,158,11,0.15)"/>
+                    <stop offset="100%" stop-color="rgba(245,158,11,0)"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,90 C50,30 100,20 150,25 C200,40 250,70 300,85 C350,95 380,98 400,100 L400,120 L0,120 Z" fill="url(#gradSocial)"/>
+                <path d="M0,90 C50,30 100,20 150,25 C200,40 250,70 300,85 C350,95 380,98 400,100" fill="none" stroke="#A1A1AA" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="100" cy="20" r="4" fill="#71717A"/>
+              </svg>
+            </div>
+            <div class="card-action">
+              <div class="card-action-label">Strategic Action</div>
+              <div class="card-action-text">Build rapid response content teams. Pre-approve flexible templates that can be adapted to trending formats within hours.</div>
+            </div>
+            <div class="card-tags">
+              <span class="tag">Memes</span>
+              <span class="tag">Velocity</span>
+              <span class="tag">Timing</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">🌊</div>
+              <div class="card-title-group">
+                <h3 class="card-title">Nostalgia Waves</h3>
+                <p class="card-subtitle">Retro Resurgence</p>
+              </div>
+              <div class="card-metric">
+                <div class="card-metric-value green" data-animate="+156%">0%</div>
+              </div>
+            </div>
+            <p class="card-body">2000s and early 2010s nostalgia content sees 156% higher engagement. Y2K aesthetics and "core" trends dominate visual language.</p>
+            <div class="card-chart">
+              <div class="donut-chart">
+                <svg class="donut-visual" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="#F3F4F6" stroke-width="12"/>
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="#000000" stroke-width="12" stroke-dasharray="120 251" stroke-dashoffset="0" transform="rotate(-90 50 50)"/>
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="#71717A" stroke-width="12" stroke-dasharray="80 251" stroke-dashoffset="-120" transform="rotate(-90 50 50)"/>
+                </svg>
+                <div class="donut-legend">
+                  <div class="donut-legend-item">
+                    <div class="donut-legend-dot" style="background: #10B981"></div>
+                    <span class="donut-legend-label">2000s Nostalgia</span>
+                    <span class="donut-legend-value">48%</span>
+                  </div>
+                  <div class="donut-legend-item">
+                    <div class="donut-legend-dot" style="background: #5B2C6F"></div>
+                    <span class="donut-legend-label">90s Revival</span>
+                    <span class="donut-legend-value">32%</span>
+                  </div>
+                  <div class="donut-legend-item">
+                    <div class="donut-legend-dot" style="background: #F3F4F6"></div>
+                    <span class="donut-legend-label">Other</span>
+                    <span class="donut-legend-value">20%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-tags">
+              <span class="tag">Nostalgia</span>
+              <span class="tag">Y2K</span>
+              <span class="tag">Retro</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-text">Insights Powered by <a href="https://consuma.ai" target="_blank" rel="noopener noreferrer" class="consuma-link"><strong>Consuma</strong><svg class="external-arrow" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 2.5H9.5V8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.5 2.5L2.5 9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
+    </div>
+  </footer>
 
   <script>
-    // Release schedule (months 0-based)
-    const releaseSchedule = {
-      consumer: new Date(2026,1,11,17,30),
-      brands: new Date(2026,1,12,17,30),
-      // rest will be filled
-    };
-    const rest = ['marketing','fnb','events','media','social-trends','competitive'];
-    (function fill(){
-      let last = releaseSchedule.brands;
-      for(const id of rest){
-        if(!releaseSchedule[id]){
-          last = new Date(last.getTime() + 24*60*60*1000);
-          releaseSchedule[id] = last;
-        }
-      }
-    })();
-
-    function pad2(n){return String(n).padStart(2,'0')}
-    function formatMs(ms){
-      if(ms<0) ms=0;
-      const s=Math.floor(ms/1000);
-      const d=Math.floor(s/86400);
-      const h=Math.floor((s%86400)/3600);
-      const m=Math.floor((s%3600)/60);
-      const sec=s%60;
-      if(d>0) return `${d}d ${pad2(h)}:${pad2(m)}:${pad2(sec)}`;
-      return `${pad2(h)}:${pad2(m)}:${pad2(sec)}`;
+    // Scroll to top on page load/refresh
+    window.scrollTo(0, 0);
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
     }
 
-    function escapeHtml(s){return String(s||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-
-    function applyComing(sectionId){
-      const section=document.getElementById(sectionId);
-      const title = sectionId.replace('-',' ').replace(/\b\w/g,l=>l.toUpperCase());
-      const subtitleMap={
-        'events':'Social, Entertainment, Celebs',
-        'media':'Landscape, Genres, Preferences',
-        'social-trends':'Brainrot, Memes, References',
-        'competitive':'Market Dynamics, Share'
-      };
-      const release=releaseSchedule[sectionId];
-      const diff=release - Date.now();
-      // replace inner content with title/subtitle and either date or countdown
-      section.innerHTML = `<div class="content-inner"><h2 class="panel-title">${escapeHtml(title)}</h2><p class="panel-sub">${escapeHtml(subtitleMap[sectionId]||'')}</p></div>`;
-      const container = section.querySelector('.content-inner');
-      if(diff>24*60*60*1000){
-        const opts={day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'};
-        const node=document.createElement('div'); node.className='overlay-card muted'; node.innerHTML=`Unlocks ${release.toLocaleString(undefined,opts)}`; section.appendChild(node);
-      } else {
-        // within 24h: show countdown card and keep content blurred (preview)
-        container.classList.add('preview-mode');
-        const overlay=document.createElement('div'); overlay.className='overlay-back';
-        overlay.innerHTML=`<div class="overlay-card"><div class="big" id="cd-${sectionId}">${formatMs(diff)}</div><div class="muted">Unlocks in</div></div>`;
-        section.appendChild(overlay);
-      }
-    }
-
-    function removeLock(sectionId){
-      const section=document.getElementById(sectionId);
-      // restore original content if needed by reloading page or keep as-is; for simplicity remove preview overlay
-      const inner=section.querySelector('.content-inner');
-      if(inner) inner.classList.remove('preview-mode');
-      const back = section.querySelector('.overlay-back'); if(back) back.remove();
-      const card = section.querySelector('.overlay-card.muted'); if(card) card.remove();
-    }
-
-    function update(){
-      const now=Date.now();
-      // update postits badges and states
-      document.querySelectorAll('.postit').forEach(p=>{
-        const id=p.getAttribute('data-sphere');
-        const rel=releaseSchedule[id];
-        if(!rel) return;
-        const diff=rel - now;
-        p.classList.remove('coming-soon');
-        if(diff>0){
-          if(diff>24*60*60*1000) p.classList.add('coming-soon');
-        }
+    // Parse emojis with Twemoji for iOS-style appearance
+    if (typeof twemoji !== 'undefined') {
+      twemoji.parse(document.body, {
+        folder: 'svg',
+        ext: '.svg'
       });
+    }
 
-      // sections
-      document.querySelectorAll('.sphere-section').forEach(s=>{
-        const id=s.id;
-        const rel=releaseSchedule[id];
-        if(!rel) return;
-        const diff=rel - now;
-        if(diff<=0){
-          removeLock(id);
+    // Count-up animation for numbers
+    function animateCounter(element, target, duration = 1500) {
+      const isPercentage = target.includes('%');
+      const isDecimal = target.includes('.');
+      const hasPlus = target.startsWith('+');
+      const hasTilde = target.startsWith('~');
+      
+      let prefix = '';
+      if (hasPlus) prefix = '+';
+      if (hasTilde) prefix = '~';
+      
+      const numStr = target.replace(/[+~%xhM]/g, '');
+      const num = parseFloat(numStr);
+      
+      if (isNaN(num)) return;
+      
+      const suffix = target.includes('%') ? '%' : 
+                     target.includes('x') ? 'x' : 
+                     target.includes('h') ? 'h' :
+                     target.includes('M') ? 'M' : '';
+      
+      const startTime = performance.now();
+      const decimals = isDecimal ? (numStr.split('.')[1] || '').length : 0;
+      
+      function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Easing function (ease-out)
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        const current = num * easeOut;
+        
+        element.textContent = prefix + current.toFixed(decimals) + suffix;
+        
+        if (progress < 1) {
+          requestAnimationFrame(update);
         } else {
-          // if >24h or <=24h applycoming
-          applyComing(id);
+          element.textContent = target;
         }
-      });
-
-      // update countdown numbers for any visible cards
-      document.querySelectorAll('[id^=\"cd-\"]').forEach(el=>{
-        const id = el.id.replace('cd-','');
-        const rel=releaseSchedule[id];
-        if(!rel) return;
-        el.textContent = formatMs(rel - Date.now());
-      });
+      }
+      
+      element.textContent = prefix + '0' + suffix;
+      requestAnimationFrame(update);
     }
 
-    // initial seed: populate empty sections with their static title/sub to match request
-    ['events','media','social-trends','competitive'].forEach(id=>{
-      const sec=document.getElementById(id);
-      if(sec) sec.innerHTML = `<div class="content-inner"><h2 class="panel-title">${escapeHtml(id.replace('-',' ').replace(/\b\w/g,l=>l.toUpperCase()))}</h2><p class="panel-sub">${escapeHtml({
-        'events':'Social, Entertainment, Celebs',
-        'media':'Landscape, Genres, Preferences',
-        'social-trends':'Brainrot, Memes, References',
-        'competitive':'Market Dynamics, Share'
-      }[id])}</p></div>`;
+    // Animate header metrics on page load
+    function animateHeaderMetrics() {
+      document.querySelectorAll('.metrics-bar .metric-value').forEach(metric => {
+        const count = metric.dataset.count;
+        const suffix = metric.dataset.suffix || '';
+        if (count) {
+          const target = count + suffix;
+          animateCounter(metric, target, 1800);
+        }
+      });
+    }
+    
+    // Run header animation after a short delay
+    setTimeout(animateHeaderMetrics, 300);
+
+    // Text cycling animation
+    function animateTextCycle(element, finalText, duration = 1200) {
+      const words = {
+        'Access': ['Fame', 'Reach', 'Aura', 'Vibe', 'Access'],
+        'Messy': ['Perfect', 'Clean', 'Styled', 'Chaotic', 'Messy'],
+        'Adult': ['Sweet', 'Basic', 'Simple', 'Complex', 'Adult'],
+        'Trigger': ['Random', 'Maybe', 'Signal', 'Anchor', 'Trigger'],
+        'High': ['Low', 'Medium', 'Rising', 'High'],
+        'Pizza': ['Salad', 'Sushi', 'Tacos', 'Pizza'],
+        'TikTok': ['YouTube', 'Twitter', 'Insta', 'TikTok'],
+        'Cricket': ['Tennis', 'Soccer', 'Movies', 'Cricket'],
+        '9-12h': ['2h', '5h', '8h', '10h', '9-12h'],
+        '🔥→❄️': ['🔥→❄️']
+      };
+      
+      const cycleWords = words[finalText] || [finalText];
+      const interval = duration / cycleWords.length;
+      let index = 0;
+      
+      element.style.opacity = '0.7';
+      
+      const timer = setInterval(() => {
+        element.textContent = cycleWords[index];
+        index++;
+        
+        if (index >= cycleWords.length) {
+          clearInterval(timer);
+          element.style.opacity = '1';
+          element.textContent = finalText;
+        }
+      }, interval);
+    }
+
+    // Intersection Observer to trigger animations when visible
+    const observerOptions = {
+      threshold: 0.3,
+      rootMargin: '0px'
+    };
+
+    const animatedElements = new Set();
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !animatedElements.has(entry.target)) {
+          animatedElements.add(entry.target);
+          
+          const metric = entry.target.querySelector('.card-metric-value');
+          if (metric && metric.dataset.animate) {
+            const value = metric.dataset.animate;
+            // Check if it's a simple numeric value (not a range like 9-12h)
+            const isSimpleNumeric = /^[+~]?\d+\.?\d*[%xhM]?$/.test(value);
+            
+            if (isSimpleNumeric) {
+              animateCounter(metric, value);
+            } else {
+              animateTextCycle(metric, value);
+            }
+          }
+        }
+      });
+    }, observerOptions);
+
+    // Observe all cards
+    document.querySelectorAll('.card').forEach(card => {
+      observer.observe(card);
     });
 
-    // run updater every second
-    update();
-    setInterval(update,1000);
-
-    // click handling
-    document.querySelectorAll('.postit').forEach(p=>{
-      p.addEventListener('click',()=>{
-        document.querySelectorAll('.postit').forEach(x=>x.classList.remove('active'));
-        p.classList.add('active');
-        const id=p.getAttribute('data-sphere');
-        document.querySelectorAll('.sphere-section').forEach(s=>s.classList.remove('active'));
-        const sec=document.getElementById(id);
-        if(sec) sec.classList.add('active');
+    // Tab navigation with fade transition
+    let isTransitioning = false;
+    
+    document.querySelectorAll('.nav-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        if (isTransitioning) return;
+        
+        const sectionId = tab.dataset.section;
+        const currentSection = document.querySelector('.section.active');
+        const newSection = document.getElementById(sectionId);
+        
+        if (currentSection === newSection) return;
+        
+        isTransitioning = true;
+        
+        // Update active tab
+        document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        // Scroll to top smoothly
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        // Fade out current section
+        if (currentSection) {
+          currentSection.classList.add('fade-out');
+        }
+        
+        // After fade out, switch sections
+        setTimeout(() => {
+          document.querySelectorAll('.section').forEach(s => {
+            s.classList.remove('active', 'fade-out');
+          });
+          
+          if (newSection) {
+            newSection.classList.add('active');
+            
+            // Re-parse emojis in case of dynamic content
+            if (typeof twemoji !== 'undefined') {
+              twemoji.parse(newSection, { folder: 'svg', ext: '.svg' });
+            }
+            
+            // Re-trigger animations for newly visible section
+            setTimeout(() => {
+              newSection.querySelectorAll('.card').forEach(card => {
+                if (!animatedElements.has(card)) {
+                  animatedElements.add(card);
+                  const metric = card.querySelector('.card-metric-value');
+                  if (metric && metric.dataset.animate) {
+                    const value = metric.dataset.animate;
+                    const isSimpleNumeric = /^[+~]?\d+\.?\d*[%xhM]?$/.test(value);
+                    if (isSimpleNumeric) {
+                      animateCounter(metric, value);
+                    } else {
+                      animateTextCycle(metric, value);
+                    }
+                  }
+                }
+              });
+              isTransitioning = false;
+            }, 100);
+          } else {
+            isTransitioning = false;
+          }
+        }, 150);
       });
     });
+
+    // Scroll detection for sticky header background
+    const stickyWrapper = document.querySelector('.sticky-wrapper');
+    let lastScrollY = 0;
+    
+    function handleScroll() {
+      const scrollY = window.scrollY;
+      
+      if (scrollY > 50) {
+        stickyWrapper.classList.add('scrolled');
+      } else {
+        stickyWrapper.classList.remove('scrolled');
+      }
+      
+      lastScrollY = scrollY;
+    }
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Check initial state
   </script>
 </body>
 </html>
-
